@@ -1,0 +1,35 @@
+{% extends 'BitcoinAdminBundle::base.html.twig' %}
+{% block title 'Manage Product Category' %}
+{% block leftmenu %}{% endblock %}
+{% block page_heading %}Product Category Details{% endblock %}
+{% block head_link %}
+    <div class=" pull-right span1">
+        <a href="{{ path('productcategory') }}" class="sbmt_btn">Back</a> 
+    </div>
+    <div class=" pull-right span1">
+        <a href="{{ path('productcategory_edit', { 'id': entity.id }) }}" class="sbmt_btn">Edit</a>
+    </div>
+    {#{ form(delete_form) }#}
+{% endblock %}
+{% block contentdata %}
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Category Name</th>
+                <td>{{ entity.categoryName }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ entity.description | raw  }}</td>
+            </tr>
+            <tr>
+                <th>Created On</th>
+                <td>{{ entity.createdDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Last Modified</th>
+                <td>{{ entity.modifiedDate|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

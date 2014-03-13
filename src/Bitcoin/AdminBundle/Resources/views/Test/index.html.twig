@@ -1,0 +1,46 @@
+{% extends 'BitcoinAdminBundle::base.html.twig' %}
+{% block title 'Manage Product Category' %}
+{% block leftmenu %}{% endblock %}
+{% block page_heading %}Test All Program Category List{% endblock %}
+{% block head_link %}<a href="{{ path('productcategory_new') }}" class="sbmt_btn pull-right">Create New Category</a>{% endblock %}
+{% block contentdata %}
+<div class="tabular_cont">
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Categoryname</th>
+                <th>Description</th>
+                <th>Createddate</th>
+                <th>Modifieddate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('productcategory_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.categoryName }}</td>
+                <td>{{ entity.description }}</td>
+                <td>{% if entity.createdDate %}{{ entity.createdDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.modifiedDate %}{{ entity.modifiedDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('productcategory_show', { 'id': entity.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('productcategory_edit', { 'id': entity.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript" src="{{ asset('bundles/bitcoinadmin/') }}libs/bootstrap-data-table/bootstrap-datatable.min.js" ></script>
+
+{% endblock %}

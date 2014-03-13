@@ -1,0 +1,8 @@
+bitcoin_site:
+    resource: "@BitcoinSiteBundle/Resources/config/routing.yml"
+    prefix:   /
+
+bitcoin_admin:
+    resource: "@BitcoinAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+

@@ -1,0 +1,68 @@
+{% extends 'BitcoinAdminBundle::base.html.twig' %}
+{% block title 'Manage Product Category' %}
+{% block leftmenu %}{% endblock %}
+{% block page_heading %}All Prodcuts List{% endblock %}
+{% block head_link %}<a href="{{ path('product_new') }}" class="sbmt_btn pull-right">Create New Prodcut</a>{% endblock %}
+{% block contentdata %}
+<div class="tabular_cont">
+    <div id="client_table"></div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script type="text/javascript" src="{{ asset('bundles/bitcoinadmin/') }}libs/bootstrap-data-table/bootstrap-datatable.min.js" ></script>
+<script type="text/javascript">
+    $("#client_table").datatable({
+    title: '',
+            perPage: 10,
+            allowTableinfo: false,
+            url: '{{url('product_grid')}}',
+            showPagination: true,
+            showFilter: true,
+            showFilterRow: true,
+            toggleColumns: false,
+            allowOverflow: false,
+            columns: [
+            {
+            title: "Product ID",
+                    sortable: false,
+                    field: "id",
+                    filter: false,
+            },
+            {
+            title: "Product Title",
+                    sortable: true,
+                    field: "productTitle",
+                    filter: true,
+            },
+            {
+            title: "Product Category",
+                    sortable: true,
+                    field: "fkProductCat",
+                    filter: true,
+                    callback: function (data, cell) {
+                        return (data[cell.field].categoryName);
+                    }
+            },
+            {
+            title: "Actions",
+                    sortable: false,
+                    filter: false,
+                    callback: function(data, cell) {
+                        editRoute = "{{ path('product_edit', { 'id': "PLACEHOLDER" }) }}";
+                        editRoute = editRoute.replace("PLACEHOLDER", data['id']);
+                        removeRoute = "{{ path('product_delete', { 'id': "PLACEHOLDER" }) }}";
+                        removeRoute = removeRoute.replace("PLACEHOLDER", data['id']);
+                        showRoute = "{{ path('product_show', { 'id': "PLACEHOLDER" }) }}";
+                        showRoute = showRoute.replace("PLACEHOLDER", data['id']);
+                        imageRoute = "{{ path('product_image_list', { 'productId': "PLACEHOLDER" }) }}";
+                        imageRoute = imageRoute.replace("PLACEHOLDER", data['id']);
+                        return '<a class="" href="'+imageRoute+'"><img alt="Upload Image" src="{{ asset('bundles/bitcoinadmin/') }}images/upload.png"></a>' +
+                            '<a class="" href="'+showRoute+'"><img alt="View" src="{{ asset('bundles/bitcoinadmin/') }}images/view_icon.png"></a>' +
+                            '<a class="" href="'+editRoute+'"><img alt="Edit" src="{{ asset('bundles/bitcoinadmin/') }}images/edit_icon.png"></a>' +
+                            '<a class="" href="'+removeRoute+'" onclick="return confirm_delete();"><img title="Delete" alt="Delete" src="{{ asset('bundles/bitcoinadmin/') }}images/icon-delete.png"></a>';
+                    }
+            }
+            ]
+    });
+</script>
+{% endblock %}

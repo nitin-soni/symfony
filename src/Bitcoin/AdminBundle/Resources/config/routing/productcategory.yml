@@ -1,0 +1,39 @@
+productcategory:
+    pattern:  /
+    #defaults: { _controller: "BitcoinAdminBundle:ProductCategory:index" }
+    defaults: { _controller: "BitcoinAdminBundle:ProductCategory:list" }
+
+productcategory_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BitcoinAdminBundle:ProductCategory:show" }
+
+productcategory_new:
+    pattern:  /new
+    defaults: { _controller: "BitcoinAdminBundle:ProductCategory:new" }
+
+productcategory_create:
+    pattern:  /create
+    defaults: { _controller: "BitcoinAdminBundle:ProductCategory:create" }
+    requirements: { _method: post }
+
+productcategory_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BitcoinAdminBundle:ProductCategory:edit" }
+
+productcategory_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BitcoinAdminBundle:ProductCategory:update" }
+    requirements: { _method: post|put }
+
+productcategory_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BitcoinAdminBundle:ProductCategory:delete" }
+    requirements: { _method: post|delete|get }
+
+productcategory_grid:
+    pattern:  /grid
+    defaults: { _controller: "BitcoinAdminBundle:ProductCategory:getProductCategory" }
+    
+productcategory_list:
+    pattern:  /list
+    defaults: { _controller: "BitcoinAdminBundle:ProductCategory:list" }

@@ -1,0 +1,55 @@
+{% extends 'BitcoinAdminBundle::base.html.twig' %}
+{% block title 'Add Product' %}
+{% block page_heading 'Add Product'%}
+{% block javascript %}
+<script type="text/javascript" src="{{ asset('bundles/bitcoinadmin/') }}libs/ckeditor/ckeditor.js" ></script>
+<script type="text/javascript">
+    CKEDITOR.replace();
+</script>
+{% endblock %}
+{% block contentdata %}
+<div class="tabular_cont">
+    {% block form_widget %}
+    {{ form_start(form, {'attr': {'class':'form-horizontal','autocomplete':'off'}}) }}
+    <div class="span9 margin-auto">
+        <div class="control-group">
+            {{ form_label(form.productTitle, '', {'label_attr': {'class': 'control-label'}}) }}
+            <div class="controls">
+                {{ form_widget(form.productTitle, {'attr': {'class': 'txtField', 'placeholder':'Product Name'}}) }}
+                {{ show_error(form.productTitle) }}
+            </div>
+        </div>
+        <div class="control-group">
+            {{ form_label(form.description, '', {'label_attr': {'class': 'control-label'}}) }}
+            <div class="controls">
+                {{ form_widget(form.description, {'attr': {'class': 'ckeditor ', 'placeholder':'Description'}}) }}
+                {{ show_error(form.description) }}
+            </div>
+        </div>
+        <div class="control-group">
+            {{ form_label(form.price, 'Price', {'label_attr': {'class': 'control-label'}}) }}
+            <div class="controls">
+                {{ form_widget(form.price, {'attr': {'class': 'txtField', 'placeholder':'Price'}}) }}
+                {{ show_error(form.price) }}
+            </div>
+        </div>
+        <div class="control-group">
+            {{ form_label(form.fkProductCat, 'Product Category', {'label_attr': {'class': 'control-label'}}) }}
+            <div class="controls">
+                {{ form_widget(form.fkProductCat, {'attr': {'class': 'selectBox', 'placeholder':'Email'}}) }}
+                {{ show_error(form.fkProductCat) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                {% form_theme form _self %}
+                {{ form_widget(form.submit, {'attr':{'class':'dark-button'}, 'label':'Save'}) }}
+                <button type="reset" class="light-button">Cancel</button></p>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+    {% endblock form_widget %}
+</div>  
+
+{% endblock %}

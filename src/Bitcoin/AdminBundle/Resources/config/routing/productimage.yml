@@ -1,0 +1,9 @@
+product_image_list:
+    pattern:  /{productId}
+    defaults: { _controller: "BitcoinAdminBundle:ProductImages:list" }
+product_image_add:
+    pattern:  /{productId}/add
+    defaults: { _controller: "BitcoinAdminBundle:ProductImages:add" }
+product_image_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BitcoinAdminBundle:ProductImages:delete" }

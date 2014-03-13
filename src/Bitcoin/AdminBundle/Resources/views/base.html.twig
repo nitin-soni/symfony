@@ -1,0 +1,91 @@
+{% extends 'BitcoinAdminBundle::layout.html.twig' %}
+
+{% block title 'Login' %}
+{#Navbar#}
+{% block navbar %}
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            <a class="brand" href="#">
+                {#<img src="{{ asset('bundles/bitcoinadmin/') }}images/logo.png" alt="JPK" title="JPK" />#}
+            </a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class=""><a href="#">User Administration</a></li>
+                    <li class="active"><a href="{{ url('productcategory') }}">Products Category</a></li>
+                    <li class="active"><a href="{{ url('product') }}">Products</a></li>
+                    <li class=""><a href="#">Settings</a></li>
+                </ul>
+            </div>
+            <div id="admin-area">
+                <p>
+                    {{ app.session.get('userData').firstName}} {{ app.session.get('userData').lastName }}
+                    <span> <a href="{{url('bitacoin_admin_logout')}}" class="logout">Logout</a></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{#Navbar#}
+{% endblock %}
+
+
+{% block content %}
+<div id="center-contents">
+    <div class="page-header clearfix">
+        <h1 class="pull-left">{% block page_heading %}Welcome{% endblock %}</h1>
+        {% block head_link %}{% endblock %}
+    </div>
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="flash-notice">
+            <div class="span6 margin-auto alert alert-error">
+                <button class="close" data-dismiss="alert" type="button">×</button>
+                {{ flashMessage }}
+            </div>
+        </div>
+    {% endfor %}
+    {% block contentdata %}
+    <div class="tabular_cont">
+        <table>
+            <tr>
+                <th><a href="#">Title</a></th>
+                <th class="hidden-phone" style="width:70%;"><a href="#">Content</a></th>
+                <th class="text-center">Actions</th>
+            </tr>
+            <tr>
+                <td>Lorem Ipsum</td>
+                <td class="hidden-phone">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie ...</td>
+                <td class="actions text-center"><a href="#" title="Edit"><img src="images/edit_icon.png" alt="Edit"></a></td>
+            </tr>
+            <tr>
+                <td>Lorem Ipsum</td>
+                <td class="hidden-phone">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie ...</td>
+                <td class="actions text-center"><a href="#" title="Edit"><img src="images/edit_icon.png" alt="Edit"></a></td>
+            </tr>
+            <tr>
+                <td>Lorem Ipsum</td>
+                <td class="hidden-phone">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie ...</td>
+                <td class="actions text-center"><a href="#" title="Edit"><img src="images/edit_icon.png" alt="Edit"></a></td>
+            </tr>
+            <tr>
+                <td>Lorem Ipsum</td>
+                <td class="hidden-phone">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie ...</td>
+                <td class="actions text-center"><a href="#" title="Edit"><img src="images/edit_icon.png" alt="Edit"></a></td>
+            </tr>
+            <tr>
+                <td>Lorem Ipsum</td>
+                <td class="hidden-phone">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie ...</td>
+                <td class="actions text-center"><a href="#" title="Edit"><img src="images/edit_icon.png" alt="Edit"></a></td>
+            </tr>
+            <tr>
+                <td>Lorem Ipsum</td>
+                <td class="hidden-phone">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie ...</td>
+                <td class="actions text-center"><a href="#" title="Edit"><img src="images/edit_icon.png" alt="Edit"></a></td>
+            </tr>
+        </table>
+    </div>
+    {% endblock %}
+</div>
+<!-- end right contents --> 
+{% endblock %}

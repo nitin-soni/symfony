@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BitCoinToBoolean | {% block title 'Welcome to Our Website!' %}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{{ asset('bundles/bitcoinadmin/') }}css/reset.css" rel="stylesheet" type="text/css">
+        <link href="{{ asset('bundles/bitcoinadmin/') }}css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="{{ asset('bundles/bitcoinadmin/') }}css/global.css" rel="stylesheet" type="text/css">
+        <link href="{{ asset('bundles/bitcoinadmin/') }}css/global-y.css" rel="stylesheet" type="text/css">
+        <link href="{{ asset('bundles/bitcoinadmin/') }}css/global-m.css" rel="stylesheet" type="text/css">
+        <link href="{{ asset('bundles/bitcoinadmin/') }}css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+        <!-- HTML5 shim for IE backwards compatibility -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+        <style>
+            .navbar-inner{min-height: 52px;}
+        </style>
+    </head>
+    <body>
+        <div id="wrapper"> 
+
+            <!-- Navbar -->
+            {% block navbar %}
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="container-fluid">
+                        <a class="brand" href="#">
+                            {#<img src="{{ asset('bundles/bitcoinadmin/') }}images/logo.png" alt="JPK" title="JPK" />#}
+                        </a>
+                        <div id="admin-area">
+                            <p><span class="admin-head">Administrator Area</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+            <!-- End Navbar -->
+
+            <div id="page-body" class="clearfix">
+                {% block content %}
+                {% endblock %}
+            </div>
+
+            <!-- end page body here -->
+
+            <div id="push"></div>
+        </div>
+
+        <!-- end wrapper -->
+
+        <footer>
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span6"><a href="#">Terms of Use</a> | <a href="#">Privacy Policy</a></div>
+                    <div class="span6 text-right">&copy; 2014 Company Name. All Rights Reserved</div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- bootstrap js files --> 
+
+        <script src="{{ asset('bundles/bitcoinadmin/') }}js/jquery.min.js"></script> 
+        <script src="{{ asset('bundles/bitcoinadmin/') }}js/bootstrap.min.js" type="text/jscript"></script> 
+        <script src="{{ asset('bundles/bitcoinadmin/') }}js/scripts.js"></script> 
+        <script src="{{ asset('bundles/bitcoinadmin/') }}js/jquery.customSelect.min.js"></script> 
+        <script type="text/javascript">
+            $(function() {
+                $('form select').customSelect();
+                $(window).resize(function() {
+                    var customWidth = $('span.customSelect').innerWidth();
+                    $('select.hasCustomSelect').css('width', customWidth + 'px');
+                });
+            });
+        </script>
+        {% block javascript %}
+        {% endblock %}
+    </body>
+</html>

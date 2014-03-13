@@ -1,0 +1,34 @@
+{% extends 'BitcoinAdminBundle::base.html.twig' %}
+{% block title 'Manage Product Category' %}
+{% block leftmenu %}{% endblock %}
+{% block page_heading %}Prodcut Images{% endblock %}
+{% block head_link %}<a href="{{ path('product_image_add', {'productId':product.id}) }}" class="sbmt_btn pull-right">Add New</a>{% endblock %}
+{% block contentdata %}
+<div class="tabular_cont">
+    <table class="records_list">
+    {% if images is not empty %}
+        {% for image in images %}
+            <tr>
+                <td><a href="{{ path('product_show', { 'id': image.id }) }}">{{ image.id }}</a></td>
+                <td>{{ image.title }}</td>
+                <td>
+                    {#{image.path}#}
+                    <img src="{{ image('uploads/images/'~image.path).resize(100,100) }}" />
+                </td>
+                <td>{% if image.createdDate %}{{ image.createdDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if image.modifiedDate %}{{ image.modifiedDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <a href="{{ path('product_image_delete', { 'id': image.id }) }}" onclick="return confirm_delete();"><img title="Delete" alt="Delete" src="{{ asset('bundles/bitcoinadmin/') }}images/icon-delete.png"></a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% else %}
+            <tr>
+                <td colspan="5">
+                    No Images added.
+                </td>
+            </tr> 
+    {% endif %}
+    </table>
+</div>
+{% endblock %}

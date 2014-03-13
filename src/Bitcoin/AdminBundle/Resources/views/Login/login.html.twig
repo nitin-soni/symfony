@@ -1,0 +1,70 @@
+{% extends 'BitcoinAdminBundle::layout.html.twig' %}
+
+{% block title 'Demo Bundle | Login' %}
+
+{% block content %}
+<!--admin form -->
+<div class="row-fluid">
+    <div class="span9 margin-auto">
+
+        <div class="page-header clearfix">
+            <h1 class="pull-left">Admin Login</h1>
+        </div>
+        <div class="admin-form">
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="flash-notice">
+                    <div class="span6 margin-auto alert alert-error">
+                        <button class="close" data-dismiss="alert" type="button">×</button>
+                        {{ flashMessage }}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="span6 margin-auto">
+                {% block form_widget %}
+                {{ form_start(form, {'attr': {'class':'form-horizontal','autocomplete':'off'}}) }}
+                <div class="input-area">
+                    <span class="icone-input"><img src="{{ asset('bundles/bitcoinadmin/') }}images/icon-email.png" alt=""></span>
+                    {{ form_widget(form.email, {'attr': {'class': 'input-block-level', 'placeholder':'Email'}}) }}
+                    {{ show_error(form.email) }}
+                </div>
+
+                <div class="input-area">
+                    <span class="icone-input"><img src="{{ asset('bundles/bitcoinadmin/') }}images/icon-password.png" alt=""></span>
+                    {{ form_widget(form.password, {'attr': {'class': 'input-block-level', 'placeholder':'Password'}}) }}
+                    {{ show_error(form.password) }}
+                </div>
+
+                <p class="text-center"><a href="#" class="forgot-link">Forgot Password?</a></p>
+                <p class="text-center">
+                    {{ form_widget(form.login, {'attr':{'class':'dark-button'}}) }}
+                    <button type="reset" class="light-button">Cancel</button></p>
+
+                {{ form_end(form) }}
+                {% endblock form_widget %}
+            </div>
+        </div>
+        <!--/form -->
+    </div>
+</div>
+<!--/admin form -->     
+{% endblock %}
+{#
+    
+    {% block form_widget %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    
+        {{ form_label(form.emailAddresses) }}
+        {{ form_errors(form.emailAddresses) }}
+        {{ form_widget(form.emailAddresses, {'attr': {'class': 'task_field'}}) }}
+
+        {{ form_label(form.password) }}
+        {{ form_errors(form.password) }}
+        {{ form_widget(form.password) }}
+
+        {{ form_widget(form.save) }}
+
+   {% endblock form_widget %}
+{{ form_end(form) }}
+{% endblock %}
+        #}

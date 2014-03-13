@@ -1,0 +1,67 @@
+<?php
+
+namespace Bitcoin\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * ProductImages
+ *
+ * @ORM\Table(name="product_images", indexes={@ORM\Index(name="fk_product", columns={"fk_product"})})
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ */
+class ProductImages {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    public $path;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_date", type="datetime", nullable=false)
+     */
+    private $createdDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modified_date", type="datetime", nullable=false)
+     */
+    private $modifiedDate;
+
+    /**
+     * @var \Bitcoin\AdminBundle\Entity\Product
+     *
+     * @ORM\ManyToOne(targetEntity="Bitcoin\AdminBundle\Entity\Product", inversedBy="product", cascade={"merge", "remove"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fk_product", referencedColumnName="id", onDelete="CASCADE")
+     * })
+     */
+    private $fkProduct;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $file;
+
+}

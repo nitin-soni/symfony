@@ -1,0 +1,7 @@
+parameters:
+#    bitcoin_site.example.class: Bitcoin\SiteBundle\Example
+
+services:
+#    bitcoin_site.example:
+#        class: %bitcoin_site.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

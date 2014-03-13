@@ -1,0 +1,141 @@
+@charset "utf-8";
+
+/* CSS Document */
+.admin-head {
+	font-size: 22px !important;
+	color: #fff !important;
+	padding: 5px 0 0 0;
+}
+.admin-form {
+	padding: 60px 0 20px;
+}
+.margin-auto {
+	float: none !important;
+	margin: 0 auto !important;
+}
+.input-area {
+	border: 1px solid #959595;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-o-border-radius: 5px;
+	position: relative;
+	height: 38px;
+	margin-bottom: 29px;
+}
+.icone-input {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 5;
+}
+.input-area input[type=text], .input-area input[type=password] {
+	border: 0;
+	text-shadow: none;
+	border-radius: 0;
+	box-shadow: none;
+	width: 80%;
+	font-size: 18px;
+	color: #818181;
+	background: none;
+	height: 38px;
+	line-height: 38px;
+	margin-left: 56px;
+	font-family:'brandon_grotesque_regularRg';
+}
+.forgot-link {
+	color: #818181;
+	text-decoration: underline;
+	font-size: 18px;
+	margin: 15px 0 0;
+	display: inline-block;
+	font-family: 'brandon_grotesquelight';
+}
+.dark-button, .light-button {
+	border: 0;
+	font-size: 18px;
+	color: #fff;
+	font-family: 'brandon_grotesquelight';
+	height: 40px;
+	line-height: 40px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-ms-border-radius: 4px;
+	-o-border-radius: 4px;
+	min-width: 100px;
+	width: auto !important;
+	width: 100px;
+	text-align: center;
+	margin: 5px;
+}
+.dark-button {
+	background: #35a8b6;
+}
+.light-button {
+	background: #35c3d4;
+}
+.dark-button:hover, .light-button:hover {
+	opacity: 0.9;
+}
+.logout-area p {
+	padding-bottom: 5px;
+}
+.logout-area button {
+	min-width: 170px;
+	width: auto !important;
+	width: 170px;
+}
+.add-form input[type=text], .add-form input[type=password], .add-form textarea, .add-form select {
+	font-family:'brandon_grotesque_regularRg';
+}
+.view-email {
+	padding: 0 0 15px;
+}
+.view-email p {
+	color: #818181;
+	font-size: 18px;
+	font-family:'brandon_grotesque_regularRg';
+}
+.view-email h4 {
+	font-size: 24px;
+	color: #35a8b6;
+	font-weight: normal;
+	font-family:'brandon_grotesque_regularRg';
+	padding: 0 0 8px 0;
+}
+#left-menu ul li a.admin-link {
+	background: url(../images/admin-user.png) no-repeat 35px center;
+}
+#left-menu ul li a.public-users {
+	background: url(../images/public-user.png) no-repeat 35px center;
+}
+.page-header .dark-button {
+	padding: 0 3%;
+}
+.view-dl dt {
+	font-weight: normal;
+	color: #35a8b6;
+	font-size: 24px;
+	font-family: 'brandon_grotesquelight';
+	text-align: left;
+	width: 135px;
+}
+
+.view-dl dd {
+	font-weight: normal;
+	color: #818181;
+	font-size: 24px;
+	font-family: 'brandon_grotesquelight';
+	margin-bottom: 20px;
+	margin-left: 135px;
+}
+
+@media (max-width: 480px){
+
+.admin-form {
+	padding: 20px 0 0;
+}
+
+}
