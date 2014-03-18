@@ -27,7 +27,13 @@ class ProductType extends AbstractType {
                     'empty_value' => 'Choose an option',
                     'required' => false,
                     'mapped' => true
-                ));
+                ))
+                ->add('featured', 'choice', array(
+                    'choices' => array(0 => 'No', 1 => 'Yes'),
+                    'required' => true,
+                    'expanded' => true,
+                ))
+        ;
     }
 
     /**

@@ -34,7 +34,7 @@ class ProductImages {
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    public $path;
+    private $path;
 
     /**
      * @var \DateTime
@@ -52,8 +52,8 @@ class ProductImages {
 
     /**
      * @var \Bitcoin\AdminBundle\Entity\Product
-     *
-     * @ORM\ManyToOne(targetEntity="Bitcoin\AdminBundle\Entity\Product", inversedBy="product", cascade={"merge", "remove"})
+     * 
+     * @ORM\ManyToOne(targetEntity="Bitcoin\AdminBundle\Entity\Product", inversedBy="id")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fk_product", referencedColumnName="id", onDelete="CASCADE")
      * })
@@ -61,7 +61,12 @@ class ProductImages {
     private $fkProduct;
 
     /**
-     * @Assert\File(maxSize="6000000")
+     * @Assert\File(
+     *      maxSize="5M",
+     *      mimeTypes = {"image/jpeg", "image/gif", "image/png", "image/tiff"},
+     *      maxSizeMessage = "The maxmimum allowed file size is 5MB.",
+     *      mimeTypesMessage = " Please upload only JPG, GIF or PNG image."
+     * )
      */
     private $file;
 

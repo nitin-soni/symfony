@@ -41,6 +41,17 @@
                 {{ show_error(form.fkProductCat) }}
             </div>
         </div>
+        <div class="control-group radio_div">
+            {{ form_label(form.featured, 'Featurd Product', {'label_attr': {'class': 'control-label'}}) }}
+            <div class="controls">
+                {% for choiceFormView in form.featured %}
+                    <label class="radio inline">
+                        {{ form_widget(choiceFormView) }}
+                        {{ form_label(choiceFormView) }}
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
         <div class="control-group">
             <div class="controls">
                 {% form_theme form _self %}

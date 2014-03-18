@@ -3,7 +3,7 @@
 namespace Bitcoin\AdminBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
+use Doctrine\ORM\Tools\Pagination\Paginator;
 /**
  * ProductCategoryRepository
  *
@@ -32,7 +32,7 @@ class ProductCategoryRepository extends EntityRepository {
         $qb->select('pc, pcp')
                 ->from($this->_entityName, 'pc')
                 ->leftJoin('pc.fkParent', 'pcp')
-                //  ->leftJoin('pc.child', 'pch')
+                //->leftJoin('pc.child', 'pch')
                 ;
 
 
@@ -64,10 +64,10 @@ class ProductCategoryRepository extends EntityRepository {
         $qb->setFirstResult($start);
         $qb->setMaxResults($limit);
         
-       //echo $qb->getQuery()->getSQL();die;
         if (TRUE === $arrayResult) {
             return $qb->getQuery()->getArrayResult();
         }
+        $paginator = new Paginator($qb->getQuery(),true);
         return $qb->getQuery()->getResult();
     }
 

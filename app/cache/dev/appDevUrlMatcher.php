@@ -141,7 +141,12 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return $this->redirect($pathinfo.'/', 'bitcoin_site_homepage');
             }
 
-            return array (  '_controller' => 'BitcoinSiteBundle:Index:index',  '_route' => 'bitcoin_site_homepage',);
+            return array (  '_controller' => 'Bitcoin\\SiteBundle\\Controller\\IndexController::indexAction',  '_route' => 'bitcoin_site_homepage',);
+        }
+
+        // bitcoin_product
+        if (0 === strpos($pathinfo, '/prduct-detail') && preg_match('#^/prduct\\-detail/(?P<id>[^/]++)/(?P<prdoductTitle>[^/]++)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'bitcoin_product')), array (  '_controller' => 'Bitcoin\\SiteBundle\\Controller\\IndexController::productDetailAction',));
         }
 
         if (0 === strpos($pathinfo, '/admin')) {

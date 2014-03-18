@@ -405,6 +405,7 @@
                   .data("filter", o.columns[column].field)
                   .val(o.filter[o.columns[column].field] || "")
                   // .change(this, this.runFilter)
+                  .attr("placeholder", 'Search '+o.columns[column].title)
                   .change(function(e){
                     runFilter.call(this, that);
                   })

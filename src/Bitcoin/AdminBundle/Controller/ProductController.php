@@ -61,6 +61,7 @@ class ProductController extends AdminController {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(Product $entity) {
+        $entity->setFeatured(false);
         $form = $this->createForm(new ProductType(), $entity, array(
             'action' => $this->generateUrl('product_create'),
             'method' => 'POST',

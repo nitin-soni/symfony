@@ -1,6 +1,6 @@
 {% extends 'BitcoinAdminBundle::base.html.twig' %}
-{% block title 'Add New Product' %}
-{% block page_heading 'Add New Product'%}
+{% block title 'Add Product Category' %}
+{% block page_heading 'Add Product Category'%}
 {% block javascript %}
 <script type="text/javascript" src="{{ asset('bundles/bitcoinadmin/') }}libs/ckeditor/ckeditor.js" ></script>
 <script type="text/javascript">
@@ -13,7 +13,7 @@
     {{ form_start(form, {'attr': {'class':'form-horizontal','autocomplete':'off'}}) }}
     <div class="span9 margin-auto">
         <div class="control-group">
-            {{ form_label(form.categoryName, '', {'label_attr': {'class': 'control-label'}}) }}
+            {{ form_label(form.categoryName, '', {'label_attr': {'class': 'control-label'}}) }}<i class="require">*</i>
             <div class="controls">
                 {{ form_widget(form.categoryName, {'attr': {'class': 'txtField', 'placeholder':'Category Name'}}) }}
                 {{ show_error(form.categoryName) }}

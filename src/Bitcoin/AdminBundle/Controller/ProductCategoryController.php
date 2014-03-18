@@ -129,7 +129,7 @@ class ProductCategoryController extends AdminController {
         $editForm->get('fkParent');
         //echo '<pre>';print_r(get_class_methods(get_class($editForm->get('fkParent'))));die;
         //$deleteForm = $this->createDeleteForm($id);
-
+        
         return $this->render('BitcoinAdminBundle:ProductCategory:edit.html.twig', array(
                     'entity' => $entity,
                     'form' => $editForm->createView(),
@@ -175,7 +175,8 @@ class ProductCategoryController extends AdminController {
             $entity->setModifiedDate();
             $em->flush();
             $this->session->getFlashBag()->add('notice', 'Category Updated Successfully.');
-            return $this->redirect($this->generateUrl('productcategory_edit', array('id' => $id)));
+            //return $this->redirect($this->generateUrl('productcategory_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('productcategory_list'));//, array('id' => $entity->getId())));
         }
 
         return $this->render('BitcoinAdminBundle:ProductCategory:edit.html.twig', array(

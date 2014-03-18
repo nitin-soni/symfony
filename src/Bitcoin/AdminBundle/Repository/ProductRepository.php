@@ -3,7 +3,7 @@
 namespace Bitcoin\AdminBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-
+use Doctrine\ORM\Tools\Pagination\Paginator;
 /**
  * ProductRepository
  *
@@ -15,10 +15,12 @@ class ProductRepository extends EntityRepository {
     public function getAllProduct($searchs = array(), $sorter = array(), $offset = 0, $limit = 10, $arrayResult = true) {
         $qb = $this->_em->createQueryBuilder();
 
-        $qb->select('p, pc')
+        $qb->select(array('p', 'pc', 'img   '))
                 ->from($this->_entityName, 'p')
-                ->leftJoin('p.fkProductCat', 'pc');
-
+                ->leftJoin('p.fkProductCat', 'pc')
+                ->leftJoin('p.images', 'img')
+                //->add('where ', $qb->expr()->countDistinct('p.id'))
+                ;
 
         if (!empty($sorter)) {
             foreach ($sorter as $sort) {
@@ -41,7 +43,9 @@ class ProductRepository extends EntityRepository {
         $start = ($start < 0) ? 0 : $start;
         $qb->setFirstResult($start);
         $qb->setMaxResults($limit);
-        
+//        $paginator = new Paginator($qb->getQuery(),true);
+//        return $paginator;
+        //echo $qb->getQuery()->getSQL();die;
         if (TRUE === $arrayResult) {
             return $qb->getQuery()->getArrayResult();
         }
@@ -59,5 +63,24 @@ class ProductRepository extends EntityRepository {
             return FALSE;
         }
     }
+    
+    public function getProducts($start=0, $limit=8) {
 
+//    $dql = "SELECT s, c, m, e FROM entities\Student s 
+//                JOIN s.country c 
+//                JOIN s.marks m
+//                JOIN m.course e 
+//                ORDER BY s.lastName, s.firstName";
+    
+    $Dql = 'SELECT p, pc, img FROM ' . $this->_entityName .' p '
+            . 'LEFT JOIN p.fkProductCat pc '
+            . 'LEFT JOIN p.images img ';
+
+    $qb = $this->_em->createQuery($Dql);
+    $qb->setFirstResult($start);
+        $qb->setMaxResults($limit);
+    return $qb->getArrayResult();
+
+
+    }
 }

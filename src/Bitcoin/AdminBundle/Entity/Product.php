@@ -59,18 +59,42 @@ class Product
      * @ORM\Column(name="modified_date", type="datetime", nullable=false)
      */
     private $modifiedDate;
-
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="featured", type="boolean", precision=0, scale=0, nullable=false, unique=false)
+     */
+    private $featured;
+    
     /**
      * @var \Bitcoin\AdminBundle\Entity\ProductCategory
      *
-     * @ORM\ManyToOne(targetEntity="Bitcoin\AdminBundle\Entity\ProductCategory", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="Bitcoin\AdminBundle\Entity\ProductCategory")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fk_product_cat", referencedColumnName="id",  onDelete="CASCADE")
      * })
      * @Assert\NotBlank(message = "Please Select Product Category.")
      */
     private $fkProductCat;
-
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * 
+     * @ORM\OneToMany(targetEntity="Bitcoin\AdminBundle\Entity\ProductImages", mappedBy="fkProduct")
+     * 
+     */
+    private $images;
+    
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Set productTitle
      *
@@ -217,5 +241,58 @@ class Product
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Get price
+     *
+     * @return boolean 
+     */
+    public function getFeatured() {
+        return $this->featured;
+    }
+    
+   /**
+    * Set Featured
+    * 
+    * @param boolean $featured
+    * @return Product
+    */
+    public function setFeatured($featured) {
+        $this->featured = $featured;
+        return $this;
+    }
+    
+    /**
+     * Add child
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductCategory $child
+     * @return ProductCategory
+     */
+    public function addImages(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+        $this->images[] = $images;
+    
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductCategory
+     */
+    public function removeImages(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get child
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

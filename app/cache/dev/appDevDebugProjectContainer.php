@@ -42,6 +42,7 @@ class appDevDebugProjectContainer extends Container
             'assetic.request_listener' => 'getAssetic_RequestListenerService',
             'assetic.value_supplier.default' => 'getAssetic_ValueSupplier_DefaultService',
             'bitcoin.twig.bitcoin_extension' => 'getBitcoin_Twig_BitcoinExtensionService',
+            'bitcoin.twig.custom_extension' => 'getBitcoin_Twig_CustomExtensionService',
             'cache_clearer' => 'getCacheClearerService',
             'cache_warmer' => 'getCacheWarmerService',
             'controller_name_converter' => 'getControllerNameConverterService',
@@ -354,6 +355,19 @@ class appDevDebugProjectContainer extends Container
     protected function getBitcoin_Twig_BitcoinExtensionService()
     {
         return $this->services['bitcoin.twig.bitcoin_extension'] = new \Bitcoin\AdminBundle\Twig\Extension\ValidationExtension();
+    }
+
+    /**
+     * Gets the 'bitcoin.twig.custom_extension' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Bitcoin\SiteBundle\Twig\Extension\CustomExtension A Bitcoin\SiteBundle\Twig\Extension\CustomExtension instance.
+     */
+    protected function getBitcoin_Twig_CustomExtensionService()
+    {
+        return $this->services['bitcoin.twig.custom_extension'] = new \Bitcoin\SiteBundle\Twig\Extension\CustomExtension();
     }
 
     /**
@@ -2914,6 +2928,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addExtension(new \Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension());
         $instance->addExtension($this->get('bitcoin.twig.bitcoin_extension'));
         $instance->addExtension($this->get('twig.extension.image'));
+        $instance->addExtension($this->get('bitcoin.twig.custom_extension'));
         $instance->addGlobal('app', $this->get('templating.globals'));
 
         return $instance;

@@ -1,0 +1,40 @@
+<p>
+<div class="new-products" id="home_page_slider">
+    <div class="category-title"><h2><a href="#">Latest Products</a></h2></div>
+    <div class="customNavigation">
+        <a class="btn prev">&nbsp;</a>
+        <a class="btn next">&nbsp;</a>
+    </div>	
+    <ul class="product-carousel" id="newproduct-carousel"> 
+       {% for key, product in latestProduct %}
+        <li class="item slider-item">
+            <div class="product-block">
+                <div class="product-block-inner">
+                    <a href="#" title="{{ product.productTitle }}" class="product-image">
+                        {% if product.images is defined and product.images is not empty  %}
+                            {% set image = product.images.0.path %}
+                        {% else %}
+                            {% set image = asset('bundles/bitcoinsite/')~'images/jr00575-wgp900_1_lar_2.jpg' %}
+                        {% endif %}
+                        <img src="{{ image('uploads/images/'~image).resize(215,215) }}" width="215" height="215" alt="{{ product.productTitle }}" />
+                        {#<img src="{{ asset('bundles/bitcoinsite/') }}images/jr00575-wgp900_1_lar_2.jpg" width="215" height="215" alt="{{ product.productTitle }}" />#}
+                        <div class="new-label">New</div>
+                        <div class="sale-label">Sale</div>
+                    </a>
+                    <h2 class="product-name" ><a href="#" title="{{ product.productTitle }}">{{ product.productTitle }}</a></h2>
+                    <div class="price-box">
+                        <span class="regular-price" id="product-price-{{ product.id }}">
+                            <span class="price">${{ product.price }}</span>
+                        </span>
+                    </div>
+                    <div class="actions">
+                        <button type="button" title="Add to Cart" class="button btn-cart" onclick="setLocation('{{ path('bitcoin_product', {'id':product.id, 'prdoductTitle': product.productTitle}) }}')"><span><span>Add to Cart</span></span></button>
+                    </div> 
+                </div><!-- End div class product-block-->
+            </div><!-- End div class product-block-inner -->			
+        </li>
+        {% endfor %}
+    </ul>
+    <span style="display: none; visibility: hidden;" class="newproduct_default_width"></span>
+</div>  
+</p>

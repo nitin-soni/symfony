@@ -58,6 +58,7 @@ class LoginController extends Controller {
             'name' => 'Login',
             'form' => $form->createView()
         );
+        
         return $this->render('BitcoinAdminBundle:Login:login.html.twig', $pageData);
     }
     

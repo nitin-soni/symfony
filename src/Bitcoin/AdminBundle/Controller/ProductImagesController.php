@@ -53,7 +53,7 @@ class ProductImagesController extends AdminController {
                 $em->flush();
                 return $this->redirect($this->generateUrl('product_image_list', array('productId'=>$productId)));
             } else {
-                throw new \Exception("Error Occured try again");
+                //  throw new \Exception("Error Occured try again");
             }
         }
         return $this->render('BitcoinAdminBundle:ProductImages:addimage.html.twig', array(
@@ -90,7 +90,7 @@ class ProductImagesController extends AdminController {
 
         $em->remove($entity);
         $em->flush();
-
+        
         return $this->redirect($this->generateUrl('product_image_list', array('productId'=>$product->getId())));
     }
 }

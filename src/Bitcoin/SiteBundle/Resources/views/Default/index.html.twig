@@ -1,1 +1,66 @@
 {% extends 'BitcoinSiteBundle::layout.html.twig' %}
+{% block content %}
+                    {% include 'BitcoinSiteBundle:Product:latestProduct.html.twig' %}
+<section class="main-container col2-left-layout">
+    <div class="main"> 
+
+        <article class="col-main">
+            <div class="breadcrumbs">
+                <ul>
+                    <li class="home">
+                        <a href="#" title="Go to Home Page">Home</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="std"><div class="about_us">
+                    <div class="about_us_left">
+                        <h3>About Jewellery Store</h3>
+                        <span>Lorem ipsum presta shop amet </span> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit.</div>
+                    <div class="about_us_right"><img src="{{ asset('bundles/bitcoinsite/') }}images/banner.png" alt="" /></div>
+                </div>
+                <p>
+                <div class="featured-products">
+                    <div class="category-title">
+                        <h2><a href="#">Featured Products</a></h2></div>
+
+                    <ul class="products-grid" id="featured-grid">
+                        {% for key, product in latestProduct %}
+                        <li class="item product-items">   
+                            <div class="product-block">
+                                <div class="product-block-inner">
+                                        <a href="#" title="{{ product.productTitle }}" class="product-image">
+                                            {% if product.images is defined and product.images is not empty  %}
+                                                {% set image = product.images.0.path %}
+                                            {% else %}
+                                                {% set image = asset('bundles/bitcoinsite/')~'images/jr00575-wgp900_1_lar_2.jpg' %}
+                                            {% endif %}
+                                            <img src="{{ image('uploads/images/'~image).resize(215,215) }}" width="215" height="215" alt="{{ product.productTitle }}" />
+                                            {#<img src="{{ asset('bundles/bitcoinsite/') }}images/jr00575-wgp900_1_lar_2.jpg" width="215" height="215" alt="{{ product.productTitle }}" />#}
+                                            <div class="new-label">New</div>
+                                            <div class="sale-label">Sale</div>
+                                        </a>
+                                        <h2 class="product-name">
+                                            <a href="#" title="{{ product.productTitle }}">{{ product.productTitle }}</a>
+                                        </h2>
+                                    <div class="price-box">
+                                        <span class="regular-price" id="product-price-{{ product.id }}-new">
+                                            <span class="price">${{ product.price }}</span>                                    
+                                        </span>
+                                    </div>
+                                    <div class="actions">
+                                        <button type="button" class="button btn-cart" onclick="setLocation('{{ path('bitcoin_product', {'id':product.id, 'prdoductTitle': product.productTitle}) }}')"><span><span>Add to Cart</span></span></button>
+                                    </div>
+                                </div><!-- End div class product-block-->
+                            </div><!-- End div class product-block-inner -->
+                        </li>        
+                        {% endfor %}
+                    </ul> 
+                </div>
+                <span class="featured_default_width" style="display:none; visibility:hidden"></span>
+                </p></div>
+        </article>
+
+                            {% include 'BitcoinSiteBundle:Includes:sidebar.html.twig' %}
+    </div>
+</section>
+                    {% endblock %}

@@ -63,7 +63,7 @@ class User
      */
     private $modifiedDate;
 
-
+    
 
     /**
      * Get idUser
