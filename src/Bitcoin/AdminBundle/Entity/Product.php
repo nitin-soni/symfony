@@ -4,7 +4,7 @@ namespace Bitcoin\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Bitcoin\AdminBundle\Entity\Product
  *
@@ -47,6 +47,15 @@ class Product
     private $price;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="price_listed", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank
+     * Assert\Type(type="float", message="The value should have decimal points.") 
+     */
+    private $priceListed;
+    
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_date", type="datetime", nullable=false)
@@ -77,6 +86,15 @@ class Product
      * @Assert\NotBlank(message = "Please Select Product Category.")
      */
     private $fkProductCat;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sku", type="string", length=250, nullable=true, unique=true)
+     * Assert\NotBlank(message = "Please enter unique product sku.")
+     */
+    private $sku;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -294,5 +312,74 @@ class Product
     public function getImages()
     {
         return $this->images;
+    }
+
+    /**
+     * Set priceListed
+     *
+     * @param float $priceListed
+     * @return Product
+     */
+    public function setPriceListed($priceListed)
+    {
+        $this->priceListed = $priceListed;
+
+        return $this;
+    }
+
+    /**
+     * Get priceListed
+     *
+     * @return float 
+     */
+    public function getPriceListed()
+    {
+        return $this->priceListed;
+    }
+
+    /**
+     * Set sku
+     *
+     * @param string $sku
+     * @return Product
+     */
+    public function setSku($sku)
+    {
+        $this->sku = $sku;
+
+        return $this;
+    }
+
+    /**
+     * Get sku
+     *
+     * @return string 
+     */
+    public function getSku()
+    {
+        return $this->sku;
+    }
+
+    /**
+     * Add images
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductImages $images
+     * @return Product
+     */
+    public function addImage(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductImages $images
+     */
+    public function removeImage(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+        $this->images->removeElement($images);
     }
 }

@@ -48,8 +48,8 @@ class ProductController extends AdminController {
         }
 
         return $this->render('BitcoinAdminBundle:Product:new.html.twig', array(
-                    'entity' => $entity,
-                    'form' => $form->createView(),
+                'entity' => $entity,
+                'form' => $form->createView(),
         ));
     }
 
@@ -79,10 +79,9 @@ class ProductController extends AdminController {
     public function newAction() {
         $entity = new Product();
         $form = $this->createCreateForm($entity);
-
         return $this->render('BitcoinAdminBundle:Product:new.html.twig', array(
-                    'entity' => $entity,
-                    'form' => $form->createView(),
+            'entity' => $entity,
+            'form' => $form->createView(),
         ));
     }
 

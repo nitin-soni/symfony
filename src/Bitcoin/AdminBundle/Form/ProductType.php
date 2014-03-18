@@ -17,9 +17,6 @@ class ProductType extends AbstractType {
                 ->add('productTitle', 'text', array('required' => false))
                 ->add('description', 'textarea', array('required' => false))
                 ->add('price', 'text', array('required' => false))
-                //->add('createdDate')
-                //->add('modifiedDate')
-                //->add('fkProductCat')
                 ->add('fkProductCat', 'entity', array(
                     'class' => 'BitcoinAdminBundle:ProductCategory',
                     'property' => 'categoryName',
@@ -33,6 +30,8 @@ class ProductType extends AbstractType {
                     'required' => true,
                     'expanded' => true,
                 ))
+                ->add('priceListed', 'text', array('required' => false))
+                ->add('sku', 'text', array('required' => false))
         ;
     }
 

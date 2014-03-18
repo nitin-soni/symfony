@@ -4,7 +4,7 @@ namespace Bitcoin\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Bitcoin\AdminBundle\Entity\Product
  *
@@ -33,7 +33,7 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -47,6 +47,15 @@ class Product
     private $price;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="price_listed", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank
+     * Assert\Type(type="float", message="The value should have decimal points.") 
+     */
+    private $priceListed;
+    
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_date", type="datetime", nullable=false)
@@ -59,18 +68,51 @@ class Product
      * @ORM\Column(name="modified_date", type="datetime", nullable=false)
      */
     private $modifiedDate;
-
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="featured", type="boolean", precision=0, scale=0, nullable=false, unique=false)
+     */
+    private $featured;
+    
     /**
      * @var \Bitcoin\AdminBundle\Entity\ProductCategory
      *
      * @ORM\ManyToOne(targetEntity="Bitcoin\AdminBundle\Entity\ProductCategory")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fk_product_cat", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="fk_product_cat", referencedColumnName="id",  onDelete="CASCADE")
      * })
      * @Assert\NotBlank(message = "Please Select Product Category.")
      */
     private $fkProductCat;
-
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sku", type="string", length=250, nullable=true, unique=true)
+     * @Assert\NotBlank(message = "Please enter unique product sku.")
+     */
+    private $sku;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * 
+     * @ORM\OneToMany(targetEntity="Bitcoin\AdminBundle\Entity\ProductImages", mappedBy="fkProduct")
+     * 
+     */
+    private $images;
+    
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Set productTitle
      *
@@ -217,5 +259,58 @@ class Product
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Get price
+     *
+     * @return boolean 
+     */
+    public function getFeatured() {
+        return $this->featured;
+    }
+    
+   /**
+    * Set Featured
+    * 
+    * @param boolean $featured
+    * @return Product
+    */
+    public function setFeatured($featured) {
+        $this->featured = $featured;
+        return $this;
+    }
+    
+    /**
+     * Add child
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductCategory $child
+     * @return ProductCategory
+     */
+    public function addImages(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+        $this->images[] = $images;
+    
+        return $this;
+    }
+
+    /**
+     * Remove child
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductCategory
+     */
+    public function removeImages(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Get child
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
     }
 }

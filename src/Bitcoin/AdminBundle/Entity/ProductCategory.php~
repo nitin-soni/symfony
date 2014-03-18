@@ -33,7 +33,7 @@ class ProductCategory
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=false)
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
@@ -54,7 +54,7 @@ class ProductCategory
     /**
      * @var \Bitcoin\AdminBundle\Entity\ProductCategory
      *
-     * @ORM\ManyToOne(targetEntity="Bitcoin\AdminBundle\Entity\ProductCategory", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="Bitcoin\AdminBundle\Entity\ProductCategory")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fk_parent", referencedColumnName="id", onDelete="CASCADE")
      * })
