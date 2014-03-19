@@ -310,6 +310,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductController::listAction',  '_route' => 'product_list',);
                 }
 
+                // product_add
+                if ($pathinfo === '/admin/product/add') {
+                    return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductController::addAction',  '_route' => 'product_add',);
+                }
+
                 if (0 === strpos($pathinfo, '/admin/product-image')) {
                     // product_image_list
                     if (preg_match('#^/admin/product\\-image/(?P<productId>[^/]++)$#s', $pathinfo, $matches)) {

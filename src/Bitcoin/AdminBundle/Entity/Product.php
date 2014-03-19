@@ -87,7 +87,6 @@ class Product
      */
     private $fkProductCat;
     
-    
     /**
      * @var string
      *

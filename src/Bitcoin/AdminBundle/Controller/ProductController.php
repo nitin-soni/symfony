@@ -24,7 +24,7 @@ class ProductController extends AdminController {
         $entities = $em->getRepository('BitcoinAdminBundle:Product')->findAll();
 
         return $this->render('BitcoinAdminBundle:Product:index.html.twig', array(
-                'entities' => $entities,
+                    'entities' => $entities,
         ));
     }
 
@@ -48,8 +48,8 @@ class ProductController extends AdminController {
         }
 
         return $this->render('BitcoinAdminBundle:Product:new.html.twig', array(
-                'entity' => $entity,
-                'form' => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -80,8 +80,8 @@ class ProductController extends AdminController {
         $entity = new Product();
         $form = $this->createCreateForm($entity);
         return $this->render('BitcoinAdminBundle:Product:new.html.twig', array(
-            'entity' => $entity,
-            'form' => $form->createView(),
+                    'entity' => $entity,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -243,6 +243,38 @@ class ProductController extends AdminController {
      */
     public function listAction() {
         return $this->render('BitcoinAdminBundle:Product:list.html.twig');
+    }
+
+    public function addAction(Request $request) {
+        $productForm = new \Bitcoin\AdminBundle\Form\Product();
+        $entity = new Product();
+        $form = $this->createForm($productForm, $entity, array(
+                'action' => $this->generateUrl('product_add'),
+                'method' => 'POST',
+            ));
+        $form->add('submit', 'submit', array('label' => 'Save'));
+        
+        $form->handleRequest($request);
+        if ($request->getMethod() == 'POST') {
+            
+            if ($form->isValid()) {
+                $formData = $form->getData();
+                die('ada');
+            }else{
+               $entity->setFeatured(false);
+               
+            }
+        }else{
+            $entity->setFeatured(false);
+        }
+        
+
+
+
+        return $this->render('BitcoinAdminBundle:Product:add.html.twig', array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+        ));
     }
 
 }

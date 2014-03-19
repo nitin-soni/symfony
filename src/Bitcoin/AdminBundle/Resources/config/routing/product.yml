@@ -38,3 +38,6 @@ product_list:
     pattern:  /list
     defaults: { _controller: "BitcoinAdminBundle:Product:list" }
     
+product_add:
+    pattern:  /add
+    defaults: { _controller: "BitcoinAdminBundle:Product:add" }
