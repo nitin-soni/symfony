@@ -14,9 +14,9 @@ class Product extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-                ->add('productTitle', 'text', array('required' => false))
+                ->add('productTitle', 'text', array('required' => true))
                 ->add('description', 'textarea', array('required' => false))
-                ->add('price', 'text', array('required' => false))
+                ->add('price', 'text', array('required' => true))
                 ->add('fkProductCat', 'entity', array(
                     'class' => 'BitcoinAdminBundle:ProductCategory',
                     'property' => 'categoryName',
@@ -30,8 +30,13 @@ class Product extends AbstractType {
                     'required' => true,
                     'expanded' => true,
                 ))
-                ->add('priceListed', 'text', array('required' => false))
-                ->add('sku', 'text', array('required' => false))
+                ->add('priceListed', 'text', array('required' => true))
+                ->add('sku', 'text', array('required' => true))
+                ->add('images', 'collection', array(
+                    'type'   => new ProductImageType(),
+                    'allow_add' => true,
+                    'mapped' => true
+                ))
         ;
     }
 

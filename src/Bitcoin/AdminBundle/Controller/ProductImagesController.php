@@ -70,7 +70,7 @@ class ProductImagesController extends AdminController {
     private function buildUploadForm(ProductImages $entity) {
         $form = $this->createFormBuilder($entity)
                 ->add('title','text', array('required'=>'false'))
-                ->add('file')
+                ->add('file', 'file')
                 ->add('submit', 'submit', array('label' => 'Upload'))
                 ->getForm();
         return $form;

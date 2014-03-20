@@ -59,7 +59,14 @@ class ProductImages {
      * })
      */
     private $fkProduct;
-
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="featured", type="boolean", precision=0, scale=0, nullable=false, unique=false)
+     */
+    private $featured;
+    
     /**
      * @Assert\File(
      *      maxSize="5M",
@@ -69,7 +76,7 @@ class ProductImages {
      * )
      */
     private $file;
-
+    
     /**
      * Get id
      *

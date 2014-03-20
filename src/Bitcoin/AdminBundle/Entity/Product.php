@@ -5,6 +5,8 @@ namespace Bitcoin\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Bitcoin\AdminBundle\Entity\Product
  *
@@ -98,11 +100,19 @@ class Product
     /**
      * @var \Doctrine\Common\Collections\Collection
      * 
+     * 
      * @ORM\OneToMany(targetEntity="Bitcoin\AdminBundle\Entity\ProductImages", mappedBy="fkProduct")
      * 
      */
     private $images;
     
+    /**
+     * @var \Bitcoin\AdminBundle\Entity\ProductImages
+     * 
+     * @ORM\OneToMany(targetEntity="Bitcoin\AdminBundle\Entity\ProductImages", mappedBy="fkProduct")
+     * 
+     */
+    public $photos;
     
     /**
      * Constructor
@@ -110,6 +120,7 @@ class Product
     public function __construct()
     {
         $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        //$this->photos = new \Bitcoin\AdminBundle\Entity\ProductImages();
     }
     
     /**
@@ -280,38 +291,6 @@ class Product
         return $this;
     }
     
-    /**
-     * Add child
-     *
-     * @param \Bitcoin\AdminBundle\Entity\ProductCategory $child
-     * @return ProductCategory
-     */
-    public function addImages(\Bitcoin\AdminBundle\Entity\ProductImages $images)
-    {
-        $this->images[] = $images;
-    
-        return $this;
-    }
-
-    /**
-     * Remove child
-     *
-     * @param \Bitcoin\AdminBundle\Entity\ProductCategory
-     */
-    public function removeImages(\Bitcoin\AdminBundle\Entity\ProductImages $images)
-    {
-        $this->images->removeElement($images);
-    }
-
-    /**
-     * Get child
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
 
     /**
      * Set priceListed
@@ -358,27 +337,45 @@ class Product
     {
         return $this->sku;
     }
-
-    /**
-     * Add images
-     *
-     * @param \Bitcoin\AdminBundle\Entity\ProductImages $images
-     * @return Product
-     */
-    public function addImage(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    
+    public function setImages($images )
     {
         $this->images[] = $images;
-
+    
+        return $this;
+    }
+    
+    /**
+     * Add child
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductCategory $child
+     * @return ProductCategory
+     */
+    public function addImages(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+        $this->images[] = $images;
+    
         return $this;
     }
 
     /**
-     * Remove images
+     * Remove child
      *
-     * @param \Bitcoin\AdminBundle\Entity\ProductImages $images
+     * @param \Bitcoin\AdminBundle\Entity\ProductCategory
      */
-    public function removeImage(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    public function removeImages(\Bitcoin\AdminBundle\Entity\ProductImages $images)
     {
         $this->images->removeElement($images);
     }
+
+    /**
+     * Get child
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+    
 }

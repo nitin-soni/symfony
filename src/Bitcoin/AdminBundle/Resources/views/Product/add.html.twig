@@ -78,10 +78,27 @@ $(document).ready(function()
                 {% endfor %}
             </div>
         </div>
-        <div class="control-group radio_div">
-            <input id="fileupload" type="file" name="files[]" data-url="{{ oneup_uploader_endpoint('gallery') }}" multiple />
-        </div>
         
+        <div class="control-group">
+            {{ form_label(form.images, 'Product images', {'label_attr': {'class': 'control-label'}}) }}
+            {{ show_error(form.images) }}
+            <div class="controls">
+            {% for image in form.images %}
+                <div class="control-group">
+                    {{ form_label(image.title, '', {'label_attr': {'class': 'control-label'}}) }}
+                    <div class="controls">
+                        {{ form_widget(image.title) }}
+                    </div>
+                </div>
+                <div class="control-group">
+                    {{ form_label(image.file, '', {'label_attr': {'class': 'control-label'}}) }}
+                    <div class="controls">
+                        {{ form_widget(image.file) }}
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
         {#
         <div class="control-group">
             <label class="control-label">Product Image</label>
@@ -98,14 +115,6 @@ $(document).ready(function()
                 </div>
             </div>
 
-        </div>{#
-        {% include "PunkAveFileUploaderBundle:Default:templates.html.twig" %}
-        <div class="row">
-            <div class="file-uploader"></div>
-
-            <button class="btn btn-primary" type="submit">{{ "Save Changes" }}</button>
-            <a class="btn" href="">Cancel</a>
-            <a class="btn btn-danger" href="">Delete</a>
         </div>#}
         <div class="control-group">
             <div class="controls ">

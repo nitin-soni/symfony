@@ -259,7 +259,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
                 // product_new
                 if ($pathinfo === '/admin/product/new') {
-                    return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductController::newAction',  '_route' => 'product_new',);
+                    return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductController::addAction',  '_route' => 'product_new',);
                 }
 
                 // product_create

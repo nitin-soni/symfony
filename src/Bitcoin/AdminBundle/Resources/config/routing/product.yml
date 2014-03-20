@@ -9,7 +9,8 @@ product_show:
 
 product_new:
     pattern:  /new
-    defaults: { _controller: "BitcoinAdminBundle:Product:new" }
+    #defaults: { _controller: "BitcoinAdminBundle:Product:new" }
+    defaults: { _controller: "BitcoinAdminBundle:Product:add" }
 
 product_create:
     pattern:  /create

@@ -999,14 +999,6 @@
         <argument>0</argument>
       </call>
       <call method="addListenerService">
-        <argument>oneup_uploader.post_persist</argument>
-        <argument type="collection">
-          <argument>acme_hello.upload_listene</argument>
-          <argument>onUpload</argument>
-        </argument>
-        <argument>0</argument>
-      </call>
-      <call method="addListenerService">
         <argument>oneup_uploader.validation</argument>
         <argument type="collection">
           <argument>oneup_uploader.validation_listener.max_size</argument>
@@ -2547,9 +2539,6 @@
     </service>
     <service id="bitcoin.twig.bitcoin_extension" class="Bitcoin\AdminBundle\Twig\Extension\ValidationExtension">
       <tag name="twig.extension"/>
-    </service>
-    <service id="acme_hello.upload_listene" class="Bitcoin\AdminBundle\EventListener\UploadListener">
-      <tag name="kernel.event_listener" event="oneup_uploader.post_persist" method="onUpload"/>
     </service>
     <service id="image.handling" class="Gregwar\ImageBundle\Services\ImageHandling">
       <argument>cache</argument>

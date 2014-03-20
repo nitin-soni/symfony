@@ -248,27 +248,56 @@ class ProductController extends AdminController {
     public function addAction(Request $request) {
         $productForm = new \Bitcoin\AdminBundle\Form\Product();
         $entity = new Product();
+        $entity->setFeatured(FALSE);
+
+        //Logic for image
+        $img = new \Bitcoin\AdminBundle\Entity\ProductImages();
+        $entity->getImages()->add($img);
+
         $form = $this->createForm($productForm, $entity, array(
             'action' => $this->generateUrl('product_add'),
             'method' => 'POST',
         ));
         $form->add('submit', 'submit', array('label' => 'Save'));
-        
+
         $form->handleRequest($request);
         if ($request->getMethod() == 'POST') {
-            
-            if ($form->isValid()) {
-                $formData = $form->getData();
-                die('ada');
-            }else{
-               $entity->setFeatured(false);
-               
-            }
-        }else{
-            $entity->setFeatured(false);
-        }
-        
 
+            if ($form->isValid()) {
+                //Get entity Manager
+                $em = $this->getDoctrine()->getEntityManager();
+                //Get Form Data
+                $formData = $form->getData();
+
+                //Save Producu
+                $product = new Product();
+                $product->setProductTitle($form['productTitle']->getData());
+                $product->setDescription($form['description']->getData());
+                $product->setPrice($form['price']->getData());
+                $product->setPriceListed($form['priceListed']->getData());
+                $product->setFeatured($form['featured']->getData());
+                $product->setCreatedDate();
+                $product->setFkProductCat($form['fkProductCat']->getData());
+                $product->setModifiedDate();
+                $em->persist($product);
+                $em->flush();
+
+                //Save Image
+                $images = $form['images']->getData()->toArray();
+                if (!empty($images)) {
+                    foreach ($images as $image) {
+                        $image->setCreatedDate();
+                        $image->setModifiedDate();
+                        $image->setFkProduct($product);
+                        $em->persist($image);
+                        $em->flush();
+                    }
+                }
+                
+                $this->session->getFlashBag()->add('notice', 'Product added Successfully. You can add more images here.');
+                return $this->redirect($this->generateUrl('product_image_list',  array('productId'=>$product->getId())));//, array('id' => $entity->getId())));
+            }
+        }
 
 
         return $this->render('BitcoinAdminBundle:Product:add.html.twig', array(
