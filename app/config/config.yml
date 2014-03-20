@@ -32,7 +32,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
+    bundles:        [BitcoinAdminBundle]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -71,3 +71,8 @@ gregwar_image:
     web_dir: %kernel.root_dir%/..
     cache_dir:  cache
     #throw_exception: true
+    
+oneup_uploader:
+    mappings:
+        gallery:
+            frontend: blueimp

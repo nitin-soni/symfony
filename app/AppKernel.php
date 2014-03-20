@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Bitcoin\AdminBundle\BitcoinAdminBundle(),   
             new Gregwar\ImageBundle\GregwarImageBundle(),
             new Bitcoin\SiteBundle\BitcoinSiteBundle(),
+            new Oneup\UploaderBundle\OneupUploaderBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

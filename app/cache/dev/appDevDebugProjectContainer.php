@@ -32,6 +32,7 @@ class appDevDebugProjectContainer extends Container
         $this->scopes = array('request' => 'container');
         $this->scopeChildren = array('request' => array());
         $this->methodMap = array(
+            'acme_hello.upload_listene' => 'getAcmeHello_UploadListeneService',
             'annotation_reader' => 'getAnnotationReaderService',
             'assetic.asset_factory' => 'getAssetic_AssetFactoryService',
             'assetic.asset_manager' => 'getAssetic_AssetManagerService',
@@ -131,6 +132,19 @@ class appDevDebugProjectContainer extends Container
             'monolog.logger.router' => 'getMonolog_Logger_RouterService',
             'monolog.logger.security' => 'getMonolog_Logger_SecurityService',
             'monolog.logger.templating' => 'getMonolog_Logger_TemplatingService',
+            'oneup_uploader.chunk_manager' => 'getOneupUploader_ChunkManagerService',
+            'oneup_uploader.chunks_storage' => 'getOneupUploader_ChunksStorageService',
+            'oneup_uploader.controller.gallery' => 'getOneupUploader_Controller_GalleryService',
+            'oneup_uploader.error_handler.blueimp' => 'getOneupUploader_ErrorHandler_BlueimpService',
+            'oneup_uploader.namer.uniqid' => 'getOneupUploader_Namer_UniqidService',
+            'oneup_uploader.orphanage_manager' => 'getOneupUploader_OrphanageManagerService',
+            'oneup_uploader.routing.loader' => 'getOneupUploader_Routing_LoaderService',
+            'oneup_uploader.storage.gallery' => 'getOneupUploader_Storage_GalleryService',
+            'oneup_uploader.templating.uploader_helper' => 'getOneupUploader_Templating_UploaderHelperService',
+            'oneup_uploader.twig.extension.uploader' => 'getOneupUploader_Twig_Extension_UploaderService',
+            'oneup_uploader.validation_listener.allowed_mimetype' => 'getOneupUploader_ValidationListener_AllowedMimetypeService',
+            'oneup_uploader.validation_listener.disallowed_mimetype' => 'getOneupUploader_ValidationListener_DisallowedMimetypeService',
+            'oneup_uploader.validation_listener.max_size' => 'getOneupUploader_ValidationListener_MaxSizeService',
             'profiler' => 'getProfilerService',
             'profiler_listener' => 'getProfilerListenerService',
             'property_accessor' => 'getPropertyAccessorService',
@@ -260,6 +274,19 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'acme_hello.upload_listene' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Bitcoin\AdminBundle\EventListener\UploadListener A Bitcoin\AdminBundle\EventListener\UploadListener instance.
+     */
+    protected function getAcmeHello_UploadListeneService()
+    {
+        return $this->services['acme_hello.upload_listene'] = new \Bitcoin\AdminBundle\EventListener\UploadListener();
+    }
+
+    /**
      * Gets the 'annotation_reader' service.
      *
      * This service is shared.
@@ -282,9 +309,12 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getAssetic_AssetManagerService()
     {
+        $a = $this->get('templating.loader');
+
         $this->services['assetic.asset_manager'] = $instance = new \Assetic\Factory\LazyAssetManager($this->get('assetic.asset_factory'), array('twig' => new \Assetic\Factory\Loader\CachedFormulaLoader(new \Assetic\Extension\Twig\TwigFormulaLoader($this->get('twig')), new \Assetic\Cache\ConfigCache('/var/www/symfony/app/cache/dev/assetic/config'), true)));
 
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($this->get('templating.loader'), '', '/var/www/symfony/app/Resources/views', '/\\.[^.]+\\.twig$/'), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'BitcoinAdminBundle', '/var/www/symfony/app/Resources/BitcoinAdminBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'BitcoinAdminBundle', '/var/www/symfony/src/Bitcoin/AdminBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, '', '/var/www/symfony/app/Resources/views', '/\\.[^.]+\\.twig$/'), 'twig');
 
         return $instance;
     }
@@ -506,6 +536,10 @@ class appDevDebugProjectContainer extends Container
 
         $instance->addListenerService('kernel.controller', array(0 => 'data_collector.router', 1 => 'onKernelController'), 0);
         $instance->addListenerService('kernel.request', array(0 => 'assetic.request_listener', 1 => 'onKernelRequest'), 0);
+        $instance->addListenerService('oneup_uploader.post_persist', array(0 => 'acme_hello.upload_listene', 1 => 'onUpload'), 0);
+        $instance->addListenerService('oneup_uploader.validation', array(0 => 'oneup_uploader.validation_listener.max_size', 1 => 'onValidate'), 0);
+        $instance->addListenerService('oneup_uploader.validation', array(0 => 'oneup_uploader.validation_listener.allowed_mimetype', 1 => 'onValidate'), 0);
+        $instance->addListenerService('oneup_uploader.validation', array(0 => 'oneup_uploader.validation_listener.disallowed_mimetype', 1 => 'onValidate'), 0);
         $instance->addSubscriberService('response_listener', 'Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener');
         $instance->addSubscriberService('streamed_response_listener', 'Symfony\\Component\\HttpKernel\\EventListener\\StreamedResponseListener');
         $instance->addSubscriberService('locale_listener', 'Symfony\\Component\\HttpKernel\\EventListener\\LocaleListener');
@@ -556,7 +590,7 @@ class appDevDebugProjectContainer extends Container
     {
         $this->services['debug.templating.engine.php'] = $instance = new \Symfony\Bundle\FrameworkBundle\Templating\TimedPhpEngine($this->get('templating.name_parser'), $this, $this->get('templating.loader'), $this->get('debug.stopwatch'), $this->get('templating.globals'));
 
-        $instance->setHelpers(array('slots' => 'templating.helper.slots', 'assets' => 'templating.helper.assets', 'request' => 'templating.helper.request', 'session' => 'templating.helper.session', 'router' => 'templating.helper.router', 'actions' => 'templating.helper.actions', 'code' => 'templating.helper.code', 'translator' => 'templating.helper.translator', 'form' => 'templating.helper.form', 'stopwatch' => 'templating.helper.stopwatch', 'logout_url' => 'templating.helper.logout_url', 'security' => 'templating.helper.security', 'assetic' => 'assetic.helper.dynamic'));
+        $instance->setHelpers(array('slots' => 'templating.helper.slots', 'assets' => 'templating.helper.assets', 'request' => 'templating.helper.request', 'session' => 'templating.helper.session', 'router' => 'templating.helper.router', 'actions' => 'templating.helper.actions', 'code' => 'templating.helper.code', 'translator' => 'templating.helper.translator', 'form' => 'templating.helper.form', 'stopwatch' => 'templating.helper.stopwatch', 'logout_url' => 'templating.helper.logout_url', 'security' => 'templating.helper.security', 'assetic' => 'assetic.helper.dynamic', 'oneup_uploader' => 'oneup_uploader.templating.uploader_helper'));
 
         return $instance;
     }
@@ -1638,6 +1672,168 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'oneup_uploader.chunk_manager' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Oneup\UploaderBundle\Uploader\Chunk\ChunkManager A Oneup\UploaderBundle\Uploader\Chunk\ChunkManager instance.
+     */
+    protected function getOneupUploader_ChunkManagerService()
+    {
+        return $this->services['oneup_uploader.chunk_manager'] = new \Oneup\UploaderBundle\Uploader\Chunk\ChunkManager(array('maxage' => 604800, 'storage' => array('type' => 'filesystem', 'filesystem' => NULL, 'directory' => '/var/www/symfony/app/cache/dev/uploader/chunks', 'stream_wrapper' => NULL, 'sync_buffer_size' => '100K', 'prefix' => 'chunks'), 'load_distribution' => true), $this->get('oneup_uploader.chunks_storage'));
+    }
+
+    /**
+     * Gets the 'oneup_uploader.chunks_storage' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Oneup\UploaderBundle\Uploader\Chunk\Storage\FilesystemStorage A Oneup\UploaderBundle\Uploader\Chunk\Storage\FilesystemStorage instance.
+     */
+    protected function getOneupUploader_ChunksStorageService()
+    {
+        return $this->services['oneup_uploader.chunks_storage'] = new \Oneup\UploaderBundle\Uploader\Chunk\Storage\FilesystemStorage('/var/www/symfony/app/cache/dev/uploader/chunks');
+    }
+
+    /**
+     * Gets the 'oneup_uploader.controller.gallery' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Oneup\UploaderBundle\Controller\BlueimpController A Oneup\UploaderBundle\Controller\BlueimpController instance.
+     * 
+     * @throws InactiveScopeException when the 'oneup_uploader.controller.gallery' service is requested while the 'request' scope is not active
+     */
+    protected function getOneupUploader_Controller_GalleryService()
+    {
+        if (!isset($this->scopedServices['request'])) {
+            throw new InactiveScopeException('oneup_uploader.controller.gallery', 'request');
+        }
+
+        return $this->services['oneup_uploader.controller.gallery'] = $this->scopedServices['request']['oneup_uploader.controller.gallery'] = new \Oneup\UploaderBundle\Controller\BlueimpController($this, $this->get('oneup_uploader.storage.gallery'), $this->get('oneup_uploader.error_handler.blueimp'), array('frontend' => 'blueimp', 'custom_frontend' => array('name' => NULL, 'class' => NULL), 'storage' => array('service' => NULL, 'type' => 'filesystem', 'filesystem' => NULL, 'directory' => '/var/www/symfony/app/../web/uploads/gallery', 'stream_wrapper' => NULL, 'sync_buffer_size' => '100K'), 'allowed_mimetypes' => array(), 'disallowed_mimetypes' => array(), 'error_handler' => NULL, 'max_size' => 2147483647, 'use_orphanage' => false, 'enable_progress' => false, 'enable_cancelation' => false, 'namer' => 'oneup_uploader.namer.uniqid'), 'gallery');
+    }
+
+    /**
+     * Gets the 'oneup_uploader.namer.uniqid' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Oneup\UploaderBundle\Uploader\Naming\UniqidNamer A Oneup\UploaderBundle\Uploader\Naming\UniqidNamer instance.
+     */
+    protected function getOneupUploader_Namer_UniqidService()
+    {
+        return $this->services['oneup_uploader.namer.uniqid'] = new \Oneup\UploaderBundle\Uploader\Naming\UniqidNamer();
+    }
+
+    /**
+     * Gets the 'oneup_uploader.orphanage_manager' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Oneup\UploaderBundle\Uploader\Orphanage\OrphanageManager A Oneup\UploaderBundle\Uploader\Orphanage\OrphanageManager instance.
+     */
+    protected function getOneupUploader_OrphanageManagerService()
+    {
+        return $this->services['oneup_uploader.orphanage_manager'] = new \Oneup\UploaderBundle\Uploader\Orphanage\OrphanageManager($this, array('maxage' => 604800, 'directory' => '/var/www/symfony/app/cache/dev/uploader/orphanage'));
+    }
+
+    /**
+     * Gets the 'oneup_uploader.routing.loader' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Oneup\UploaderBundle\Routing\RouteLoader A Oneup\UploaderBundle\Routing\RouteLoader instance.
+     */
+    protected function getOneupUploader_Routing_LoaderService()
+    {
+        return $this->services['oneup_uploader.routing.loader'] = new \Oneup\UploaderBundle\Routing\RouteLoader(array('gallery' => array(0 => 'oneup_uploader.controller.gallery', 1 => array('enable_progress' => false, 'enable_cancelation' => false))));
+    }
+
+    /**
+     * Gets the 'oneup_uploader.storage.gallery' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Oneup\UploaderBundle\Uploader\Storage\FilesystemStorage A Oneup\UploaderBundle\Uploader\Storage\FilesystemStorage instance.
+     */
+    protected function getOneupUploader_Storage_GalleryService()
+    {
+        return $this->services['oneup_uploader.storage.gallery'] = new \Oneup\UploaderBundle\Uploader\Storage\FilesystemStorage('/var/www/symfony/app/../web/uploads/gallery');
+    }
+
+    /**
+     * Gets the 'oneup_uploader.templating.uploader_helper' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Oneup\UploaderBundle\Templating\Helper\UploaderHelper A Oneup\UploaderBundle\Templating\Helper\UploaderHelper instance.
+     */
+    protected function getOneupUploader_Templating_UploaderHelperService()
+    {
+        return $this->services['oneup_uploader.templating.uploader_helper'] = new \Oneup\UploaderBundle\Templating\Helper\UploaderHelper($this->get('router'));
+    }
+
+    /**
+     * Gets the 'oneup_uploader.twig.extension.uploader' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Oneup\UploaderBundle\Twig\Extension\UploaderExtension A Oneup\UploaderBundle\Twig\Extension\UploaderExtension instance.
+     */
+    protected function getOneupUploader_Twig_Extension_UploaderService()
+    {
+        return $this->services['oneup_uploader.twig.extension.uploader'] = new \Oneup\UploaderBundle\Twig\Extension\UploaderExtension($this->get('oneup_uploader.templating.uploader_helper'));
+    }
+
+    /**
+     * Gets the 'oneup_uploader.validation_listener.allowed_mimetype' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Oneup\UploaderBundle\EventListener\AllowedMimetypeValidationListener A Oneup\UploaderBundle\EventListener\AllowedMimetypeValidationListener instance.
+     */
+    protected function getOneupUploader_ValidationListener_AllowedMimetypeService()
+    {
+        return $this->services['oneup_uploader.validation_listener.allowed_mimetype'] = new \Oneup\UploaderBundle\EventListener\AllowedMimetypeValidationListener();
+    }
+
+    /**
+     * Gets the 'oneup_uploader.validation_listener.disallowed_mimetype' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Oneup\UploaderBundle\EventListener\DisallowedMimetypeValidationListener A Oneup\UploaderBundle\EventListener\DisallowedMimetypeValidationListener instance.
+     */
+    protected function getOneupUploader_ValidationListener_DisallowedMimetypeService()
+    {
+        return $this->services['oneup_uploader.validation_listener.disallowed_mimetype'] = new \Oneup\UploaderBundle\EventListener\DisallowedMimetypeValidationListener();
+    }
+
+    /**
+     * Gets the 'oneup_uploader.validation_listener.max_size' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Oneup\UploaderBundle\EventListener\MaxSizeValidationListener A Oneup\UploaderBundle\EventListener\MaxSizeValidationListener instance.
+     */
+    protected function getOneupUploader_ValidationListener_MaxSizeService()
+    {
+        return $this->services['oneup_uploader.validation_listener.max_size'] = new \Oneup\UploaderBundle\EventListener\MaxSizeValidationListener();
+    }
+
+    /**
      * Gets the 'profiler' service.
      *
      * This service is shared.
@@ -1795,6 +1991,7 @@ class appDevDebugProjectContainer extends Container
         $d->addLoader(new \Symfony\Component\Routing\Loader\AnnotationDirectoryLoader($a, $c));
         $d->addLoader(new \Symfony\Component\Routing\Loader\AnnotationFileLoader($a, $c));
         $d->addLoader($c);
+        $d->addLoader($this->get('oneup_uploader.routing.loader'));
 
         return $this->services['routing.loader'] = new \Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader($this->get('controller_name_converter'), $this->get('monolog.logger.router', ContainerInterface::NULL_ON_INVALID_REFERENCE), $d);
     }
@@ -2924,11 +3121,12 @@ class appDevDebugProjectContainer extends Container
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\HttpKernelExtension($this->get('fragment.handler')));
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\FormExtension(new \Symfony\Bridge\Twig\Form\TwigRenderer(new \Symfony\Bridge\Twig\Form\TwigRendererEngine(array(0 => 'form_div_layout.html.twig')), $this->get('form.csrf_provider', ContainerInterface::NULL_ON_INVALID_REFERENCE))));
         $instance->addExtension(new \Twig_Extension_Debug());
-        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(), $this->get('assetic.value_supplier.default', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
+        $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), $this->get('templating.name_parser'), true, array(), array(0 => 'BitcoinAdminBundle'), $this->get('assetic.value_supplier.default', ContainerInterface::NULL_ON_INVALID_REFERENCE)));
         $instance->addExtension(new \Doctrine\Bundle\DoctrineBundle\Twig\DoctrineExtension());
         $instance->addExtension($this->get('bitcoin.twig.bitcoin_extension'));
         $instance->addExtension($this->get('twig.extension.image'));
         $instance->addExtension($this->get('bitcoin.twig.custom_extension'));
+        $instance->addExtension($this->get('oneup_uploader.twig.extension.uploader'));
         $instance->addGlobal('app', $this->get('templating.globals'));
 
         return $instance;
@@ -3191,6 +3389,23 @@ class appDevDebugProjectContainer extends Container
     protected function getDoctrine_Dbal_Logger_Profiling_DefaultService()
     {
         return $this->services['doctrine.dbal.logger.profiling.default'] = new \Doctrine\DBAL\Logging\DebugStack();
+    }
+
+    /**
+     * Gets the 'oneup_uploader.error_handler.blueimp' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * This service is private.
+     * If you want to be able to request this service from the container directly,
+     * make it public, otherwise you might end up with broken code.
+     *
+     * @return Oneup\UploaderBundle\Uploader\ErrorHandler\BlueimpErrorHandler A Oneup\UploaderBundle\Uploader\ErrorHandler\BlueimpErrorHandler instance.
+     */
+    protected function getOneupUploader_ErrorHandler_BlueimpService()
+    {
+        return $this->services['oneup_uploader.error_handler.blueimp'] = new \Oneup\UploaderBundle\Uploader\ErrorHandler\BlueimpErrorHandler();
     }
 
     /**
@@ -3461,6 +3676,7 @@ class appDevDebugProjectContainer extends Container
                 'BitcoinAdminBundle' => 'Bitcoin\\AdminBundle\\BitcoinAdminBundle',
                 'GregwarImageBundle' => 'Gregwar\\ImageBundle\\GregwarImageBundle',
                 'BitcoinSiteBundle' => 'Bitcoin\\SiteBundle\\BitcoinSiteBundle',
+                'OneupUploaderBundle' => 'Oneup\\UploaderBundle\\OneupUploaderBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
                 'SensioGeneratorBundle' => 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle',
@@ -3878,7 +4094,7 @@ class appDevDebugProjectContainer extends Container
             ),
             'assetic.cache_dir' => '/var/www/symfony/app/cache/dev/assetic',
             'assetic.bundles' => array(
-
+                0 => 'BitcoinAdminBundle',
             ),
             'assetic.twig_extension.class' => 'Symfony\\Bundle\\AsseticBundle\\Twig\\AsseticExtension',
             'assetic.twig_formula_loader.class' => 'Assetic\\Extension\\Twig\\TwigFormulaLoader',
@@ -3980,6 +4196,50 @@ class appDevDebugProjectContainer extends Container
             'gregwar_image.web_dir' => '/var/www/symfony/app/..',
             'image.handling.class' => 'Gregwar\\ImageBundle\\Services\\ImageHandling',
             'image.handler.class' => 'Gregwar\\ImageBundle\\ImageHandler',
+            'oneup_uploader.chunks.manager.class' => 'Oneup\\UploaderBundle\\Uploader\\Chunk\\ChunkManager',
+            'oneup_uploader.chunks_storage.gaufrette.class' => 'Oneup\\UploaderBundle\\Uploader\\Chunk\\Storage\\GaufretteStorage',
+            'oneup_uploader.chunks_storage.filesystem.class' => 'Oneup\\UploaderBundle\\Uploader\\Chunk\\Storage\\FilesystemStorage',
+            'oneup_uploader.namer.uniqid.class' => 'Oneup\\UploaderBundle\\Uploader\\Naming\\UniqidNamer',
+            'oneup_uploader.routing.loader.class' => 'Oneup\\UploaderBundle\\Routing\\RouteLoader',
+            'oneup_uploader.storage.gaufrette.class' => 'Oneup\\UploaderBundle\\Uploader\\Storage\\GaufretteStorage',
+            'oneup_uploader.storage.filesystem.class' => 'Oneup\\UploaderBundle\\Uploader\\Storage\\FilesystemStorage',
+            'oneup_uploader.orphanage.class' => 'Oneup\\UploaderBundle\\Uploader\\Storage\\FilesystemOrphanageStorage',
+            'oneup_uploader.orphanage.manager.class' => 'Oneup\\UploaderBundle\\Uploader\\Orphanage\\OrphanageManager',
+            'oneup_uploader.controller.fineuploader.class' => 'Oneup\\UploaderBundle\\Controller\\FineUploaderController',
+            'oneup_uploader.controller.blueimp.class' => 'Oneup\\UploaderBundle\\Controller\\BlueimpController',
+            'oneup_uploader.controller.uploadify.class' => 'Oneup\\UploaderBundle\\Controller\\UploadifyController',
+            'oneup_uploader.controller.yui3.class' => 'Oneup\\UploaderBundle\\Controller\\YUI3Controller',
+            'oneup_uploader.controller.fancyupload.class' => 'Oneup\\UploaderBundle\\Controller\\FancyUploadController',
+            'oneup_uploader.controller.mooupload.class' => 'Oneup\\UploaderBundle\\Controller\\MooUploadController',
+            'oneup_uploader.controller.plupload.class' => 'Oneup\\UploaderBundle\\Controller\\PluploadController',
+            'oneup_uploader.controller.dropzone.class' => 'Oneup\\UploaderBundle\\Controller\\DropzoneController',
+            'oneup_uploader.error_handler.noop.class' => 'Oneup\\UploaderBundle\\Uploader\\ErrorHandler\\NoopErrorHandler',
+            'oneup_uploader.error_handler.blueimp.class' => 'Oneup\\UploaderBundle\\Uploader\\ErrorHandler\\BlueimpErrorHandler',
+            'oneup_uploader.chunks' => array(
+                'maxage' => 604800,
+                'storage' => array(
+                    'type' => 'filesystem',
+                    'filesystem' => NULL,
+                    'directory' => '/var/www/symfony/app/cache/dev/uploader/chunks',
+                    'stream_wrapper' => NULL,
+                    'sync_buffer_size' => '100K',
+                    'prefix' => 'chunks',
+                ),
+                'load_distribution' => true,
+            ),
+            'oneup_uploader.orphanage' => array(
+                'maxage' => 604800,
+                'directory' => '/var/www/symfony/app/cache/dev/uploader/orphanage',
+            ),
+            'oneup_uploader.controllers' => array(
+                'gallery' => array(
+                    0 => 'oneup_uploader.controller.gallery',
+                    1 => array(
+                        'enable_progress' => false,
+                        'enable_cancelation' => false,
+                    ),
+                ),
+            ),
             'web_profiler.controller.profiler.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ProfilerController',
             'web_profiler.controller.router.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\RouterController',
             'web_profiler.controller.exception.class' => 'Symfony\\Bundle\\WebProfilerBundle\\Controller\\ExceptionController',

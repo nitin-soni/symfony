@@ -17,6 +17,7 @@ return array(
     'Sensio\\Bundle\\FrameworkExtraBundle' => array($vendorDir . '/sensio/framework-extra-bundle'),
     'Sensio\\Bundle\\DistributionBundle' => array($vendorDir . '/sensio/distribution-bundle'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
+    'Oneup\\UploaderBundle' => array($vendorDir . '/oneup/uploader-bundle'),
     'Monolog' => array($vendorDir . '/monolog/monolog/src'),
     'Incenteev\\ParameterHandler' => array($vendorDir . '/incenteev/composer-parameter-handler'),
     'Gregwar\\ImageBundle' => array($vendorDir . '/gregwar/image-bundle'),

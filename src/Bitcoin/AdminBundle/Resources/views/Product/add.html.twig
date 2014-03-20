@@ -6,6 +6,18 @@
 <script type="text/javascript">
     CKEDITOR.replace();
 </script>
+
+<script type="text/javascript" src="{{ asset('bundles/bitcoinadmin/') }}libs/jQuery-file-upload/js/vendor/jquery.ui.widget.js" ></script>
+<script type="text/javascript" src="{{ asset('bundles/bitcoinadmin/') }}libs/jQuery-file-upload/js/jquery.iframe-transport.js" ></script>
+<script type="text/javascript" src="{{ asset('bundles/bitcoinadmin/') }}libs/jQuery-file-upload/js/jquery.fileupload.js" ></script>
+<script type="text/javascript">
+$(document).ready(function()
+{
+    $('#fileupload').fileupload({});
+});
+</script>
+{% endblock %}
+{% block style %}
 {% endblock %}
 {% block contentdata %}
 <div class="tabular_cont">
@@ -54,6 +66,7 @@
                 {{ show_error(form.sku) }}
             </div>
         </div>
+        
         <div class="control-group radio_div">
             {{ form_label(form.featured, 'Featurd Product', {'label_attr': {'class': 'control-label'}}) }}
             <div class="controls">
@@ -65,16 +78,11 @@
                 {% endfor %}
             </div>
         </div>
-        {#
-        <div class="control-group">
-            {{ form_label(form.images, 'Product images', {'label_attr': {'class': 'control-label'}}) }}
-            <div class="controls">
-                {{ form_widget(form.images) }}
-                {{ show_error(form.images) }}
-            </div>
+        <div class="control-group radio_div">
+            <input id="fileupload" type="file" name="files[]" data-url="{{ oneup_uploader_endpoint('gallery') }}" multiple />
         </div>
-        #}
-
+        
+        {#
         <div class="control-group">
             <label class="control-label">Product Image</label>
 
@@ -90,11 +98,15 @@
                 </div>
             </div>
 
-        </div>
+        </div>{#
+        {% include "PunkAveFileUploaderBundle:Default:templates.html.twig" %}
+        <div class="row">
+            <div class="file-uploader"></div>
 
-        <div class="control-group" id="image">
-
-        </div>
+            <button class="btn btn-primary" type="submit">{{ "Save Changes" }}</button>
+            <a class="btn" href="">Cancel</a>
+            <a class="btn btn-danger" href="">Delete</a>
+        </div>#}
         <div class="control-group">
             <div class="controls ">
                 {% form_theme form _self %}

@@ -32,7 +32,6 @@ class Product extends AbstractType {
                 ))
                 ->add('priceListed', 'text', array('required' => false))
                 ->add('sku', 'text', array('required' => false))
-                //->add('images', new ProductImageType() )
         ;
     }
 

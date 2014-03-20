@@ -11,3 +11,7 @@ services:
         class: Bitcoin\AdminBundle\Twig\Extension\ValidationExtension
         tags:
             - { name: twig.extension }
+#    acme_hello.upload_listene:
+#        class: Bitcoin\AdminBundle\EventListener\UploadListener
+#        tags:
+#            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }

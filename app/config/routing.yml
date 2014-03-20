@@ -6,3 +6,6 @@ bitcoin_admin:
     resource: "@BitcoinAdminBundle/Resources/config/routing.yml"
     prefix:   /admin
 
+oneup_uploader:
+    resource: .
+    type: uploader

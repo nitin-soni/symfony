@@ -5784,3 +5784,19 @@ transform:rotate(-360deg);
 	margin: 8px 0 0 15px;
 	cursor: pointer;
 }
+/***********************/
+.stock-label {
+    background: none repeat scroll 0 0 #FFCA14;
+    color: #FFFFFF;
+    display: block;
+    letter-spacing: 1px;
+    padding: 12px 40px 5px 124px;
+    position: absolute;
+    right: -56px;
+    text-indent: 18px;
+    top: -26px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+-moz-transform: rotate(45deg);
+-o-transform: rotate(45deg);
+}

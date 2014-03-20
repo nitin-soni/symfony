@@ -41,3 +41,8 @@ product_list:
 product_add:
     pattern:  /add
     defaults: { _controller: "BitcoinAdminBundle:Product:add" }
+
+product_upload:
+    pattern:  /upload
+    defaults: { _controller: "BitcoinAdminBundle:Product:upload" }    
+    

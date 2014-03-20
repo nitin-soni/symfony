@@ -249,9 +249,9 @@ class ProductController extends AdminController {
         $productForm = new \Bitcoin\AdminBundle\Form\Product();
         $entity = new Product();
         $form = $this->createForm($productForm, $entity, array(
-                'action' => $this->generateUrl('product_add'),
-                'method' => 'POST',
-            ));
+            'action' => $this->generateUrl('product_add'),
+            'method' => 'POST',
+        ));
         $form->add('submit', 'submit', array('label' => 'Save'));
         
         $form->handleRequest($request);

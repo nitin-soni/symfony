@@ -80,6 +80,7 @@
   'BitcoinAdminBundle:Default:index.html.twig' => '/var/www/symfony/src/Bitcoin/AdminBundle/Resources/views/Default/index.html.twig',
   'BitcoinAdminBundle:Login:login.html.twig' => '/var/www/symfony/src/Bitcoin/AdminBundle/Resources/views/Login/login.html.twig',
   'BitcoinAdminBundle:Product:show.html.twig' => '/var/www/symfony/src/Bitcoin/AdminBundle/Resources/views/Product/show.html.twig',
+  'BitcoinAdminBundle:Product:add.html.twig' => '/var/www/symfony/src/Bitcoin/AdminBundle/Resources/views/Product/add.html.twig',
   'BitcoinAdminBundle:Product:new.html.twig' => '/var/www/symfony/src/Bitcoin/AdminBundle/Resources/views/Product/new.html.twig',
   'BitcoinAdminBundle:Product:index.html.twig' => '/var/www/symfony/src/Bitcoin/AdminBundle/Resources/views/Product/index.html.twig',
   'BitcoinAdminBundle:Product:list.html.twig' => '/var/www/symfony/src/Bitcoin/AdminBundle/Resources/views/Product/list.html.twig',

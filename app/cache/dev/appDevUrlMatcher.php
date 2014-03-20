@@ -315,6 +315,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductController::addAction',  '_route' => 'product_add',);
                 }
 
+                // product_upload
+                if ($pathinfo === '/admin/product/upload') {
+                    return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductController::uploadAction',  '_route' => 'product_upload',);
+                }
+
                 if (0 === strpos($pathinfo, '/admin/product-image')) {
                     // product_image_list
                     if (preg_match('#^/admin/product\\-image/(?P<productId>[^/]++)$#s', $pathinfo, $matches)) {
@@ -349,6 +354,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             }
 
         }
+
+        // _uploader_upload_gallery
+        if ($pathinfo === '/_uploader/gallery/upload') {
+            if ($this->context->getMethod() != 'POST') {
+                $allow[] = 'POST';
+                goto not__uploader_upload_gallery;
+            }
+
+            return array (  '_controller' => 'oneup_uploader.controller.gallery:upload',  '_format' => 'json',  '_route' => '_uploader_upload_gallery',);
+        }
+        not__uploader_upload_gallery:
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
     }
