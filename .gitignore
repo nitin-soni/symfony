@@ -1,0 +1,4 @@
+/*.log
+/app/config/*.yml
+/app/cache/*
+/app/logs/*
