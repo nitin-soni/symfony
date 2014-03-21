@@ -5,29 +5,40 @@
 {% block contentdata %}
     {% block form_widget %}
         {{ form_start(form, {'attr': {'class':'form-horizontal','autocomplete':'off'}}) }}
-        <div class="span9 margin-auto">
-            <div class="control-group">
+<div class="span9 margin-auto">
+    <div class="control-group">
                 {{ form_label(form.title, '', {'label_attr': {'class': 'control-label'}}) }}<i class="require">*</i>
-                <div class="controls">
+        <div class="controls">
                     {{ form_widget(form.title, {'attr': {'class': 'txtField', 'placeholder':'Image Title'}}) }}
                     {{ show_error(form.title) }}
-                </div>
-            </div>
-            <div class="control-group">
+        </div>
+    </div>
+    <div class="control-group">
                 {{ form_label(form.file, '', {'label_attr': {'class': 'control-label'}}) }}<i class="require">*</i>
-                <div class="controls">
+        <div class="controls">
                     {{ form_widget(form.file) }}
                     {{ show_error(form.file) }}
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="controls">
+        </div>
+    </div>
+    <div class="control-group radio_div">
+            {{ form_label(form.featured, 'Featurd Image', {'label_attr': {'class': 'control-label'}}) }}
+        <div class="controls">
+                {% for choiceFormView in form.featured %}
+            <label class="radio inline">
+                        {{ form_widget(choiceFormView) }}
+                        {{ form_label(choiceFormView) }}
+            </label>
+                {% endfor %}
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
                     {% form_theme form _self %}
                     {{ form_widget(form.submit, {'attr':{'class':'dark-button'}, 'label':'Upload'}) }}
-                    <button type="reset" class="light-button">Cancel</button>
-                </div>
-            </div>
+            <button type="reset" class="light-button">Cancel</button>
         </div>
+    </div>
+</div>
         {{ form_end(form) }}
     {% endblock form_widget %}
 {% endblock %}

@@ -37,119 +37,36 @@
             <p class="empty">You have no items in your shopping cart.</p>
         </div>
     </div>
-    <div class="block block-list block-compare">
-        <div class="block-title">
-            <strong><span>Compare Products                    </span></strong>
-        </div>
-        <div class="block-content">
-            <p class="empty">You have no items to compare.</p>
-        </div>
-    </div>
-    <script type="text/javascript">
-        //<![CDATA[
-        function validatePollAnswerIsSelected()
-        {
-            var options = $$('input.poll_vote');
-            for (i in options) {
-                if (options[i].checked == true) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        //]]>
-    </script>
-    <div class="block block-poll">
-        <div class="block-title">
-            <strong><span>Community Poll</span></strong>
-        </div>
-        <form id="pollForm" action="#" method="post" onsubmit="return validatePollAnswerIsSelected();">
-            <div class="block-content">
-                <p class="block-subtitle">What is your favorite color</p>
-                <ul id="poll-answers">
-                    <li>
-                        <input type="radio" name="vote" class="radio poll_vote" id="vote_1" value="1" />
-                        <span class="label"><label for="vote_1">Green</label></span>
-                    </li>
-                    <li>
-                        <input type="radio" name="vote" class="radio poll_vote" id="vote_2" value="2" />
-                        <span class="label"><label for="vote_2">Red</label></span>
-                    </li>
-                    <li>
-                        <input type="radio" name="vote" class="radio poll_vote" id="vote_3" value="3" />
-                        <span class="label"><label for="vote_3">Black</label></span>
-                    </li>
-                    <li>
-                        <input type="radio" name="vote" class="radio poll_vote" id="vote_4" value="4" />
-                        <span class="label"><label for="vote_4">Magenta</label></span>
-                    </li>
-                </ul>
-                <script type="text/javascript">decorateList('poll-answers');</script>
-                <div class="actions">
-                    <button type="submit" title="Vote" class="button"><span><span>Vote</span></span></button>
-                </div>
-            </div>
-        </form>
-    </div>
+
     <div class="block block-banner">
 
     </div>
-
+    
+    {% if product.images is defined and product.images is not empty  %}
     <div class="block block-related">
         <div class="block-title">
             <strong><span>Latest products</span></strong>
         </div>
         <div class="block-content">      
             <ol class="mini-products-list" id="block-newproducts">
+                {% for key, product in latestProduct %}
                 <li class="item">                
                     <div class="product" style="margin-left: 0px;">
                         <a href="#" title="Nose rings" class="product-image"><img src="{{ asset('bundles/bitcoinsite/') }}images/jr00575-wgp900_1_lar_2.jpg" width="50" height="50" alt="Nose rings" /></a>
-
                         <div class="product-details">
-                            <p class="product-name"><a href="#">Nose rings</a></p>
-
-                            <div class="price-box"><span class="price">$50.00</span></div>
-
+                            <p class="product-name"><a href="#">{{ product.productTitle }}</a></p>
+                            <div class="price-box"><span class="price">${{ product.price }}</span></div>
                             <p><a href="#"  rel="nofollow" class="addto-cart">Add to Cart</a></p>
-
                         </div>
-
                     </div>
                 </li>
-                <li class="item">                
-                    <div class="product" style="margin-left: 0px;">
-                        <a href=#" title="Chokers" class="product-image"><img src="{{ asset('bundles/bitcoinsite/') }}images/22_1.jpg" width="50" height="50" alt="Chokers" /></a>
-
-                        <div class="product-details">
-                            <p class="product-name"><a href="#">Chokers</a></p>
-
-                            <div class="price-box"><span class="price">$520.00</span></div>
-
-                            <p><a href="#"  rel="nofollow" class="addto-cart">Add to Cart</a></p>
-
-                        </div>
-
-                    </div>
-                </li>
-                <li class="item">                
-                    <div class="product" style="margin-left: 0px;">
-                        <a href="#" title="Bracelets" class="product-image"><img src="{{ asset('bundles/bitcoinsite/') }}images/j16_1_1.jpg" width="50" height="50" alt="Bracelets" /></a>
-
-                        <div class="product-details">
-                            <p class="product-name"><a href="#">Bracelets</a></p>
-
-                            <div class="price-box"><span class="price">$350.00</span></div>
-
-                            <p><a href="#"  rel="nofollow" class="addto-cart">Add to Cart</a></p>
-
-                        </div>
-
-                    </div>
-                </li>
+                {% endfor %}
             </ol>
+            {#
             <div class="actions"><a href="#">See All</a></div>
             <script type="text/javascript">decorateList('block-newproducts', 'none-recursive')</script>
+            #}  
         </div>    
     </div>
-
+    {% endif %}
 </aside>

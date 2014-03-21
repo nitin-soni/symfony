@@ -17,18 +17,18 @@
                             {% set image = asset('bundles/bitcoinsite/')~'images/jr00575-wgp900_1_lar_2.jpg' %}
                         {% endif %}
                         <img src="{{ image('uploads/images/'~image).resize(215,215) }}" width="215" height="215" alt="{{ product.productTitle }}" />
-                        {#<img src="{{ asset('bundles/bitcoinsite/') }}images/jr00575-wgp900_1_lar_2.jpg" width="215" height="215" alt="{{ product.productTitle }}" />#}
-                        <div class="new-label">New</div>
-                        <div class="sale-label">Sale</div>
+                        {#<img src="{{ asset('bundles/bitcoinsite/') }}images/jr00575-wgp900_1_lar_2.jpg" width="215" height="215" alt="{{ product.productTitle }}" />
+                        <div class="sale-label">Sale</div>#}
+                        <div class="stock-label">In Stock</div>
                     </a>
                     <h2 class="product-name" ><a href="#" title="{{ product.productTitle }}">{{ product.productTitle }}</a></h2>
                     <div class="price-box">
                         <span class="regular-price" id="product-price-{{ product.id }}">
-                            <span class="price">${{ product.price }}</span>
+                            <span class="price"><img src="{{ asset('bundles/bitcoinsite/') }}images/bitcoin.png" width="16" height="16" alt="B" />{{ product.price }}</span> 
                         </span>
                     </div>
                     <div class="actions">
-                        <button type="button" title="Add to Cart" class="button btn-cart" onclick="setLocation('{{ path('bitcoin_product', {'id':product.id, 'prdoductTitle': product.productTitle}) }}')"><span><span>Add to Cart</span></span></button>
+                        <button type="button" title="Add to Cart" class="button btn-cart" onclick="setLocation('{{ path('bitcoin_product', {'id':product.id, 'prdoductTitle': product.productTitle | url_encode(true)}) }}')"><span><span>Add to Cart</span></span></button>
                     </div> 
                 </div><!-- End div class product-block-->
             </div><!-- End div class product-block-inner -->			

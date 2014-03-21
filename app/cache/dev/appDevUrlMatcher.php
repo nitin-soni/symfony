@@ -144,9 +144,17 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'Bitcoin\\SiteBundle\\Controller\\IndexController::indexAction',  '_route' => 'bitcoin_site_homepage',);
         }
 
-        // bitcoin_product
-        if (0 === strpos($pathinfo, '/prduct-detail') && preg_match('#^/prduct\\-detail/(?P<id>[^/]++)/(?P<prdoductTitle>[^/]++)$#s', $pathinfo, $matches)) {
-            return $this->mergeDefaults(array_replace($matches, array('_route' => 'bitcoin_product')), array (  '_controller' => 'Bitcoin\\SiteBundle\\Controller\\IndexController::productDetailAction',));
+        if (0 === strpos($pathinfo, '/prduct-')) {
+            // bitcoin_product
+            if (0 === strpos($pathinfo, '/prduct-detail') && preg_match('#^/prduct\\-detail/(?P<id>[^/]++)/(?P<prdoductTitle>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'bitcoin_product')), array (  '_controller' => 'Bitcoin\\SiteBundle\\Controller\\IndexController::productDetailAction',));
+            }
+
+            // bitcoin_product_review
+            if (0 === strpos($pathinfo, '/prduct-review') && preg_match('#^/prduct\\-review/(?P<id>[^/]++)$#s', $pathinfo, $matches)) {
+                return $this->mergeDefaults(array_replace($matches, array('_route' => 'bitcoin_product_review')), array (  '_controller' => 'Bitcoin\\SiteBundle\\Controller\\SecureController::submitReviewAction',));
+            }
+
         }
 
         if (0 === strpos($pathinfo, '/admin')) {
@@ -320,20 +328,93 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                     return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductController::uploadAction',  '_route' => 'product_upload',);
                 }
 
-                if (0 === strpos($pathinfo, '/admin/product-image')) {
-                    // product_image_list
-                    if (preg_match('#^/admin/product\\-image/(?P<productId>[^/]++)$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'product_image_list')), array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductImagesController::listAction',));
+                if (0 === strpos($pathinfo, '/admin/product-')) {
+                    if (0 === strpos($pathinfo, '/admin/product-image')) {
+                        // product_image_list
+                        if (preg_match('#^/admin/product\\-image/(?P<productId>[^/]++)$#s', $pathinfo, $matches)) {
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'product_image_list')), array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductImagesController::listAction',));
+                        }
+
+                        // product_image_add
+                        if (preg_match('#^/admin/product\\-image/(?P<productId>[^/]++)/add$#s', $pathinfo, $matches)) {
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'product_image_add')), array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductImagesController::addAction',));
+                        }
+
+                        // product_image_delete
+                        if (preg_match('#^/admin/product\\-image/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'product_image_delete')), array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductImagesController::deleteAction',));
+                        }
+
                     }
 
-                    // product_image_add
-                    if (preg_match('#^/admin/product\\-image/(?P<productId>[^/]++)/add$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'product_image_add')), array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductImagesController::addAction',));
-                    }
+                    if (0 === strpos($pathinfo, '/admin/product-review')) {
+                        // product-review
+                        if (rtrim($pathinfo, '/') === '/admin/product-review') {
+                            if (substr($pathinfo, -1) !== '/') {
+                                return $this->redirect($pathinfo.'/', 'product-review');
+                            }
 
-                    // product_image_delete
-                    if (preg_match('#^/admin/product\\-image/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
-                        return $this->mergeDefaults(array_replace($matches, array('_route' => 'product_image_delete')), array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductImagesController::deleteAction',));
+                            return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductReviewController::indexAction',  '_route' => 'product-review',);
+                        }
+
+                        // product-review_show
+                        if (preg_match('#^/admin/product\\-review/(?P<id>[^/]++)/show$#s', $pathinfo, $matches)) {
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'product-review_show')), array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductReviewController::showAction',));
+                        }
+
+                        // product-review_new
+                        if ($pathinfo === '/admin/product-review/new') {
+                            return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductReviewController::newAction',  '_route' => 'product-review_new',);
+                        }
+
+                        // product-review_create
+                        if ($pathinfo === '/admin/product-review/create') {
+                            if ($this->context->getMethod() != 'POST') {
+                                $allow[] = 'POST';
+                                goto not_productreview_create;
+                            }
+
+                            return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductReviewController::createAction',  '_route' => 'product-review_create',);
+                        }
+                        not_productreview_create:
+
+                        // product-review_edit
+                        if (preg_match('#^/admin/product\\-review/(?P<id>[^/]++)/edit$#s', $pathinfo, $matches)) {
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'product-review_edit')), array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductReviewController::editAction',));
+                        }
+
+                        // product-review_update
+                        if (preg_match('#^/admin/product\\-review/(?P<id>[^/]++)/update$#s', $pathinfo, $matches)) {
+                            if (!in_array($this->context->getMethod(), array('POST', 'PUT'))) {
+                                $allow = array_merge($allow, array('POST', 'PUT'));
+                                goto not_productreview_update;
+                            }
+
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'product-review_update')), array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductReviewController::updateAction',));
+                        }
+                        not_productreview_update:
+
+                        // product-review_delete
+                        if (preg_match('#^/admin/product\\-review/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
+                            if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
+                                $allow = array_merge($allow, array('POST', 'DELETE'));
+                                goto not_productreview_delete;
+                            }
+
+                            return $this->mergeDefaults(array_replace($matches, array('_route' => 'product-review_delete')), array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductReviewController::deleteAction',));
+                        }
+                        not_productreview_delete:
+
+                        // product-review_grid
+                        if ($pathinfo === '/admin/product-review/grid') {
+                            return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductReviewController::getReviewAction',  '_route' => 'product-review_grid',);
+                        }
+
+                        // product-review_list
+                        if ($pathinfo === '/admin/product-review/list') {
+                            return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductReviewController::listAction',  '_route' => 'product-review_list',);
+                        }
+
                     }
 
                 }
@@ -355,16 +436,10 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
-        // _uploader_upload_gallery
-        if ($pathinfo === '/_uploader/gallery/upload') {
-            if ($this->context->getMethod() != 'POST') {
-                $allow[] = 'POST';
-                goto not__uploader_upload_gallery;
-            }
-
-            return array (  '_controller' => 'oneup_uploader.controller.gallery:upload',  '_format' => 'json',  '_route' => '_uploader_upload_gallery',);
+        // gregwar_captcha.generate_captcha
+        if (0 === strpos($pathinfo, '/_gcb/generate-captcha') && preg_match('#^/_gcb/generate\\-captcha/(?P<key>[^/]++)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'gregwar_captcha.generate_captcha')), array (  '_controller' => 'Gregwar\\CaptchaBundle\\Controller\\CaptchaController::generateCaptchaAction',));
         }
-        not__uploader_upload_gallery:
 
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
     }

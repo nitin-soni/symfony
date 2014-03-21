@@ -71,8 +71,7 @@ gregwar_image:
     web_dir: %kernel.root_dir%/..
     cache_dir:  cache
     #throw_exception: true
-    
-oneup_uploader:
-    mappings:
-        gallery:
-            frontend: blueimp
+
+gregwar_captcha: 
+    web_path: %kernel.root_dir%/..
+    length: 4

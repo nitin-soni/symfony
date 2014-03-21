@@ -5784,7 +5784,8 @@ transform:rotate(-360deg);
 	margin: 8px 0 0 15px;
 	cursor: pointer;
 }
-/***********************/
+
+/*********************************/
 .stock-label {
     background: none repeat scroll 0 0 #FFCA14;
     color: #FFFFFF;
@@ -5796,7 +5797,4 @@ transform:rotate(-360deg);
     text-indent: 18px;
     top: -26px;
     transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
--moz-transform: rotate(45deg);
--o-transform: rotate(45deg);
 }

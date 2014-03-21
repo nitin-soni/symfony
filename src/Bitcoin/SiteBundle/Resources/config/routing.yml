@@ -5,3 +5,11 @@ bitcoin_site_homepage:
 bitcoin_product:
     pattern:  /prduct-detail/{id}/{prdoductTitle}
     defaults: { _controller: BitcoinSiteBundle:Index:productDetail}
+
+bitcoin_product_review:
+    pattern:  /prduct-review/{id}
+    defaults: { _controller: BitcoinSiteBundle:Secure:submitReview}
+
+#BitcoinAdminBundle_product:
+#    resource: "@BitcoinAdminBundle/Resources/config/routing/product.yml"
+#    prefix:   /product

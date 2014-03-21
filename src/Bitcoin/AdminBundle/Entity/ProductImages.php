@@ -272,4 +272,27 @@ class ProductImages {
         $this->file = null;
     }
 
+
+    /**
+     * Set featured
+     *
+     * @param boolean $featured
+     * @return ProductImages
+     */
+    public function setFeatured($featured)
+    {
+        $this->featured = $featured;
+
+        return $this;
+    }
+
+    /**
+     * Get featured
+     *
+     * @return boolean 
+     */
+    public function getFeatured()
+    {
+        return $this->featured;
+    }
 }

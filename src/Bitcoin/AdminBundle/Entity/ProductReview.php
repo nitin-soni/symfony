@@ -1,0 +1,282 @@
+<?php
+
+namespace Bitcoin\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Description of ProductReview
+ *
+ * @author nitin
+ * 
+ * Bitcoin\AdminBundle\Entity\ProductReview
+ *
+ * @ORM\Table(name="product_review", indexes={@ORM\Index(name="fk_product", columns={"fk_product"})})
+ * @ORM\Entity(repositoryClass="Bitcoin\AdminBundle\Repository\ProductReviewRepository")
+ */
+class ProductReview {
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fullname", type="string", length=255, nullable=true)
+     */
+    private $fullname;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     */
+    private $title;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="review", type="text", nullable=true)
+     */
+    private $review;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rating", type="integer", nullable=false)
+     */
+    private $rating;
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="published", type="boolean", precision=0, scale=0, nullable=false, unique=false)
+     */
+    private $published;
+    
+    /**
+     * @var \Bitcoin\AdminBundle\Entity\Product
+     * 
+     * @ORM\ManyToOne(targetEntity="Bitcoin\AdminBundle\Entity\Product", inversedBy="id")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fk_product", referencedColumnName="id", onDelete="CASCADE")
+     * })
+     */
+    private $fkProduct;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_date", type="datetime", nullable=false)
+     */
+    private $createdDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="modified_date", type="datetime", nullable=false)
+     */
+    private $modifiedDate;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return ProductReview
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set review
+     *
+     * @param string $review
+     * @return ProductReview
+     */
+    public function setReview($review)
+    {
+        $this->review = $review;
+
+        return $this;
+    }
+
+    /**
+     * Get review
+     *
+     * @return string 
+     */
+    public function getReview()
+    {
+        return $this->review;
+    }
+
+    /**
+     * Set rating
+     *
+     * @param integer $rating
+     * @return ProductReview
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return integer 
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * Set createdDate
+     *
+     * @param \DateTime $createdDate
+     * @return ProductReview
+     */
+    public function setCreatedDate()
+    {
+        $this->createdDate = new \DateTime();
+
+        return $this;
+    }
+
+    /**
+     * Get createdDate
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
+    }
+
+    /**
+     * Set modifiedDate
+     *
+     * @param \DateTime $modifiedDate
+     * @return ProductReview
+     */
+    public function setModifiedDate()
+    {
+        $this->modifiedDate = new \DateTime();
+
+        return $this;
+    }
+
+    /**
+     * Get modifiedDate
+     *
+     * @return \DateTime 
+     */
+    public function getModifiedDate()
+    {
+        return $this->modifiedDate;
+    }
+
+    /**
+     * Set fkProduct
+     *
+     * @param \Bitcoin\AdminBundle\Entity\Product $fkProduct
+     * @return ProductReview
+     */
+    public function setFkProduct(\Bitcoin\AdminBundle\Entity\Product $fkProduct = null)
+    {
+        $this->fkProduct = $fkProduct;
+
+        return $this;
+    }
+
+    /**
+     * Get fkProduct
+     *
+     * @return \Bitcoin\AdminBundle\Entity\Product 
+     */
+    public function getFkProduct()
+    {
+        return $this->fkProduct;
+    }
+
+    /**
+     * Set published
+     *
+     * @param boolean $published
+     * @return ProductReview
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
+    /**
+     * Get published
+     *
+     * @return boolean 
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * Set fullname
+     *
+     * @param string $fullname
+     * @return ProductReview
+     */
+    public function setFullname($fullname)
+    {
+        $this->fullname = $fullname;
+
+        return $this;
+    }
+
+    /**
+     * Get fullname
+     *
+     * @return string 
+     */
+    public function getFullname()
+    {
+        return $this->fullname;
+    }
+}

@@ -1,0 +1,38 @@
+product-review:
+    pattern:  /
+    defaults: { _controller: "BitcoinAdminBundle:ProductReview:index" }
+
+product-review_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "BitcoinAdminBundle:ProductReview:show" }
+
+product-review_new:
+    pattern:  /new
+    defaults: { _controller: "BitcoinAdminBundle:ProductReview:new" }
+
+product-review_create:
+    pattern:  /create
+    defaults: { _controller: "BitcoinAdminBundle:ProductReview:create" }
+    requirements: { _method: post }
+
+product-review_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "BitcoinAdminBundle:ProductReview:edit" }
+
+product-review_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "BitcoinAdminBundle:ProductReview:update" }
+    requirements: { _method: post|put }
+
+product-review_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "BitcoinAdminBundle:ProductReview:delete" }
+    requirements: { _method: post|delete }
+
+product-review_grid:
+    pattern:  /grid
+    defaults: { _controller: "BitcoinAdminBundle:ProductReview:getReview" }
+    
+product-review_list:
+    pattern:  /list
+    defaults: { _controller: "BitcoinAdminBundle:ProductReview:list" }

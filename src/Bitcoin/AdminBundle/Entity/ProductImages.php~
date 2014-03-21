@@ -27,7 +27,7 @@ class ProductImages {
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
 
@@ -59,7 +59,14 @@ class ProductImages {
      * })
      */
     private $fkProduct;
-
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="featured", type="boolean", precision=0, scale=0, nullable=false, unique=false)
+     */
+    private $featured;
+    
     /**
      * @Assert\File(
      *      maxSize="5M",
@@ -69,7 +76,7 @@ class ProductImages {
      * )
      */
     private $file;
-
+    
     /**
      * Get id
      *
@@ -265,4 +272,27 @@ class ProductImages {
         $this->file = null;
     }
 
+
+    /**
+     * Set featured
+     *
+     * @param boolean $featured
+     * @return ProductImages
+     */
+    public function setFeatured($featured)
+    {
+        $this->featured = $featured;
+
+        return $this;
+    }
+
+    /**
+     * Get featured
+     *
+     * @return boolean 
+     */
+    public function getFeatured()
+    {
+        return $this->featured;
+    }
 }

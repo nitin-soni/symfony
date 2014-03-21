@@ -289,6 +289,7 @@ class ProductController extends AdminController {
                         $image->setCreatedDate();
                         $image->setModifiedDate();
                         $image->setFkProduct($product);
+                        $image->setFeatured(TRUE);
                         $em->persist($image);
                         $em->flush();
                     }

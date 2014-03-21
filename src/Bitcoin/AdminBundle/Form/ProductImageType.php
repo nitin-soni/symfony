@@ -15,7 +15,7 @@ class ProductImageType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder ->add('title', 'text', array('required' => false))
-                        ->add('file', 'file', array('required' => false));
+                    ->add('file', 'file', array('required' => false));
     }
 
     public function getName() {

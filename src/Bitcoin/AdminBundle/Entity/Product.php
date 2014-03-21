@@ -107,12 +107,13 @@ class Product
     private $images;
     
     /**
-     * @var \Bitcoin\AdminBundle\Entity\ProductImages
+     * @var \Doctrine\Common\Collections\Collection
      * 
-     * @ORM\OneToMany(targetEntity="Bitcoin\AdminBundle\Entity\ProductImages", mappedBy="fkProduct")
+     * 
+     * @ORM\OneToMany(targetEntity="Bitcoin\AdminBundle\Entity\ProductReview", mappedBy="fkProduct")
      * 
      */
-    public $photos;
+    private $reviews;
     
     /**
      * Constructor
@@ -120,6 +121,7 @@ class Product
     public function __construct()
     {
         $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reviews = new \Doctrine\Common\Collections\ArrayCollection();
         //$this->photos = new \Bitcoin\AdminBundle\Entity\ProductImages();
     }
     
@@ -378,4 +380,70 @@ class Product
         return $this->images;
     }
     
+
+    /**
+     * Add images
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductImages $images
+     * @return Product
+     */
+    public function addImage(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductImages $images
+     */
+    public function removeImage(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Add photos
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductImages $photos
+     * @return Product
+     */
+    public function addPhoto(\Bitcoin\AdminBundle\Entity\ProductImages $photos)
+    {
+        $this->photos[] = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductImages $photos
+     */
+    public function removePhoto(\Bitcoin\AdminBundle\Entity\ProductImages $photos)
+    {
+        $this->photos->removeElement($photos);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
+    }
+    
+    /**
+     * Get child
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
 }

@@ -33,7 +33,7 @@ class ProductImagesController extends AdminController {
      */
     public function addAction(Request $request, $productId) {
         $entity = new ProductImages();
-        
+        $entity->setFeatured(FALSE);
         //Get entity Manager
         $em = $this->getDoctrine()->getEntityManager();
         
@@ -71,6 +71,12 @@ class ProductImagesController extends AdminController {
         $form = $this->createFormBuilder($entity)
                 ->add('title','text', array('required'=>'false'))
                 ->add('file', 'file')
+                ->add('featured', 'choice', array(
+                    'choices' => array(0 => 'No', 1 => 'Yes'),
+                    'required' => true,
+                    'expanded' => true,
+                    'data' => 0,
+                ))
                 ->add('submit', 'submit', array('label' => 'Upload'))
                 ->getForm();
         return $form;

@@ -34,6 +34,7 @@
             //]]>
             </script>
             <![endif]-->
+            <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bitcoinsite/') }}css/calendar-win2k-1.css" media="all" />
             <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bitcoinsite/') }}css/styles.css" media="all" />
             <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bitcoinsite/') }}css/widgets.css" media="all" />
             <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bitcoinsite/') }}css/custom.css" media="all" />
@@ -44,7 +45,7 @@
             <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bitcoinsite/') }}css/settings.css" media="all" />
             <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bitcoinsite/') }}css/captions-original.css" media="all" />
             <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bitcoinsite/') }}css/print.css" media="print" />
-
+            {% block style %}{% endblock %}
 
             <script type="text/javascript" src="{{ asset('bundles/bitcoinsite/') }}js/prototype.js"></script>
             <script type="text/javascript" src="{{ asset('bundles/bitcoinsite/') }}js/ccard.js"></script>
@@ -93,7 +94,8 @@
             <script type="text/javascript">//<![CDATA[
                 var Translator = new Translate([]);
                 //]]>
-            </script> 
+            </script>
+            {% block script %}{% endblock %}
         </head>
         <body class=" cms-index-index cms-home">
             <div class="wrapper">
@@ -111,7 +113,8 @@
                     <header class="header-container">  
                         <div class="header">
                             <div class="header_top">
-                                <div class="inner_header_top">	
+                                <div class="inner_header_top">
+                                    {#
                                     <div class="tm_top_currency">
 
                                         <select name="currency" title="Currency" onchange="setLocation(this.value)">
@@ -129,6 +132,7 @@
                                         </select>
                                         <label for="select-language" class="btn">Language:</label>
                                     </div>
+                                    #}
                                     <div class="search_button"></div>
                                     <ul class="links">
                                         <li class="first" ><a href="myaccount.html" title="My Account" >My Account</a></li>
@@ -144,7 +148,7 @@
                             </div>
                             <div class="header-bottom"> 
 
-                                <h1 class="logo"><strong>Magento Commerce</strong><a href="#" title="Magento Commerce" class="logo"><img src="images/My_Web_Logo.PNG" alt="Magento Commerce" /></a></h1>
+                                <h1 class="logo"><strong>Magento Commerce</strong><a href="#" title="Magento Commerce" class="logo"><img src="{{ asset('bundles/bitcoinsite/') }}images/My_Web_Logo.PNG" alt="Magento Commerce" /></a></h1>
 
 
                                 <div class="quick-access">

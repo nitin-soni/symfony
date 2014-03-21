@@ -22,6 +22,11 @@ BitcoinAdminBundle_productimage:
     resource: "@BitcoinAdminBundle/Resources/config/routing/productimage.yml"
     prefix:   /product-image
 
+BitcoinAdminBundle_product-review:
+        resource: "@BitcoinAdminBundle/Resources/config/routing/productreview.yml"
+        prefix:   /product-review
+
+
 productcategory_test:
     pattern:  /test
     defaults: { _controller: "BitcoinAdminBundle:Test:index" }

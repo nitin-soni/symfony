@@ -36,7 +36,7 @@ class Product extends \Bitcoin\AdminBundle\Entity\Product implements \Doctrine\O
      *
      * @see \Doctrine\Common\Persistence\Proxy::__getLazyProperties
      */
-    public static $lazyPropertiesDefaults = array('photos' => NULL);
+    public static $lazyPropertiesDefaults = array();
 
 
 
@@ -46,60 +46,16 @@ class Product extends \Bitcoin\AdminBundle\Entity\Product implements \Doctrine\O
      */
     public function __construct($initializer = null, $cloner = null)
     {
-        unset($this->photos);
 
         $this->__initializer__ = $initializer;
         $this->__cloner__      = $cloner;
     }
 
-    /**
-     * 
-     * @param string $name
-     */
-    public function __get($name)
-    {
-        if (array_key_exists($name, $this->__getLazyProperties())) {
-            $this->__initializer__ && $this->__initializer__->__invoke($this, '__get', array($name));
 
-            return $this->$name;
-        }
 
-        trigger_error(sprintf('Undefined property: %s::$%s', __CLASS__, $name), E_USER_NOTICE);
-    }
 
-    /**
-     * 
-     * @param string $name
-     * @param mixed  $value
-     */
-    public function __set($name, $value)
-    {
-        if (array_key_exists($name, $this->__getLazyProperties())) {
-            $this->__initializer__ && $this->__initializer__->__invoke($this, '__set', array($name, $value));
 
-            $this->$name = $value;
 
-            return;
-        }
-
-        $this->$name = $value;
-    }
-
-    /**
-     * 
-     * @param  string $name
-     * @return boolean
-     */
-    public function __isset($name)
-    {
-        if (array_key_exists($name, $this->__getLazyProperties())) {
-            $this->__initializer__ && $this->__initializer__->__invoke($this, '__isset', array($name));
-
-            return isset($this->$name);
-        }
-
-        return false;
-    }
 
     /**
      * 
@@ -108,10 +64,10 @@ class Product extends \Bitcoin\AdminBundle\Entity\Product implements \Doctrine\O
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'productTitle', 'description', 'price', 'priceListed', 'createdDate', 'modifiedDate', 'featured', 'fkProductCat', 'sku', 'images', 'photos');
+            return array('__isInitialized__', 'id', 'productTitle', 'description', 'price', 'priceListed', 'createdDate', 'modifiedDate', 'featured', 'fkProductCat', 'sku', 'images', 'reviews');
         }
 
-        return array('__isInitialized__', 'id', 'productTitle', 'description', 'price', 'priceListed', 'createdDate', 'modifiedDate', 'featured', 'fkProductCat', 'sku', 'images');
+        return array('__isInitialized__', 'id', 'productTitle', 'description', 'price', 'priceListed', 'createdDate', 'modifiedDate', 'featured', 'fkProductCat', 'sku', 'images', 'reviews');
     }
 
     /**
@@ -133,7 +89,6 @@ class Product extends \Bitcoin\AdminBundle\Entity\Product implements \Doctrine\O
                 }
             };
 
-            unset($this->photos);
         }
     }
 
@@ -473,6 +428,72 @@ class Product extends \Bitcoin\AdminBundle\Entity\Product implements \Doctrine\O
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getImages', array());
 
         return parent::getImages();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addImage(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addImage', array($images));
+
+        return parent::addImage($images);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeImage(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeImage', array($images));
+
+        return parent::removeImage($images);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addPhoto(\Bitcoin\AdminBundle\Entity\ProductImages $photos)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addPhoto', array($photos));
+
+        return parent::addPhoto($photos);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removePhoto(\Bitcoin\AdminBundle\Entity\ProductImages $photos)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removePhoto', array($photos));
+
+        return parent::removePhoto($photos);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPhotos()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getPhotos', array());
+
+        return parent::getPhotos();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getReviews()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getReviews', array());
+
+        return parent::getReviews();
     }
 
 }

@@ -5,6 +5,8 @@ namespace Bitcoin\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Bitcoin\AdminBundle\Entity\Product
  *
@@ -87,17 +89,17 @@ class Product
      */
     private $fkProductCat;
     
-    
     /**
      * @var string
      *
      * @ORM\Column(name="sku", type="string", length=250, nullable=true, unique=true)
-     * @Assert\NotBlank(message = "Please enter unique product sku.")
+     * Assert\NotBlank(message = "Please enter unique product sku.")
      */
     private $sku;
     
     /**
      * @var \Doctrine\Common\Collections\Collection
+     * 
      * 
      * @ORM\OneToMany(targetEntity="Bitcoin\AdminBundle\Entity\ProductImages", mappedBy="fkProduct")
      * 
@@ -111,6 +113,7 @@ class Product
     public function __construct()
     {
         $this->images = new \Doctrine\Common\Collections\ArrayCollection();
+        //$this->photos = new \Bitcoin\AdminBundle\Entity\ProductImages();
     }
     
     /**
@@ -281,6 +284,60 @@ class Product
         return $this;
     }
     
+
+    /**
+     * Set priceListed
+     *
+     * @param float $priceListed
+     * @return Product
+     */
+    public function setPriceListed($priceListed)
+    {
+        $this->priceListed = $priceListed;
+
+        return $this;
+    }
+
+    /**
+     * Get priceListed
+     *
+     * @return float 
+     */
+    public function getPriceListed()
+    {
+        return $this->priceListed;
+    }
+
+    /**
+     * Set sku
+     *
+     * @param string $sku
+     * @return Product
+     */
+    public function setSku($sku)
+    {
+        $this->sku = $sku;
+
+        return $this;
+    }
+
+    /**
+     * Get sku
+     *
+     * @return string 
+     */
+    public function getSku()
+    {
+        return $this->sku;
+    }
+    
+    public function setImages($images )
+    {
+        $this->images[] = $images;
+    
+        return $this;
+    }
+    
     /**
      * Add child
      *
@@ -312,5 +369,62 @@ class Product
     public function getImages()
     {
         return $this->images;
+    }
+    
+
+    /**
+     * Add images
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductImages $images
+     * @return Product
+     */
+    public function addImage(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductImages $images
+     */
+    public function removeImage(\Bitcoin\AdminBundle\Entity\ProductImages $images)
+    {
+        $this->images->removeElement($images);
+    }
+
+    /**
+     * Add photos
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductImages $photos
+     * @return Product
+     */
+    public function addPhoto(\Bitcoin\AdminBundle\Entity\ProductImages $photos)
+    {
+        $this->photos[] = $photos;
+
+        return $this;
+    }
+
+    /**
+     * Remove photos
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductImages $photos
+     */
+    public function removePhoto(\Bitcoin\AdminBundle\Entity\ProductImages $photos)
+    {
+        $this->photos->removeElement($photos);
+    }
+
+    /**
+     * Get photos
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }
