@@ -96,6 +96,7 @@
                 //]]>
             </script>
             {% block script %}{% endblock %}
+            <script type="text/javascript" src="{{ asset('bundles/bitcoinsite/') }}js/script.js"></script>
         </head>
         <body class=" cms-index-index cms-home">
             <div class="wrapper">
@@ -135,11 +136,16 @@
                                     #}
                                     <div class="search_button"></div>
                                     <ul class="links">
-                                        <li class="first" ><a href="myaccount.html" title="My Account" >My Account</a></li>
+                                        <li class="first" ><a href="#" title="My Account" >My Account</a></li>
                                         <li ><a href="#" title="My Wishlist" >My Wishlist</a></li>
                                         <li ><a href="#" title="My Cart" class="top-link-cart">My Cart</a></li>
                                         <li ><a href="#" title="Checkout" class="top-link-checkout">Checkout</a></li>
-                                        <li class=" last" ><a href="myaccount.html" title="Log In" >Log In</a></li>
+                                        {% set loggedIn = app.session.get('loggedIn') %}
+                                        {% if loggedIn is not empty %} 
+                                            <li class="last" ><a href="{{ path('bitcoin_user_logout') }}" title="Log Out" >Log Out</a></li>
+                                        {% else %}
+                                            <li class="last" ><a href="{{ path('bitcoin_site_register') }}" title="Log In" >Log In</a></li>
+                                        {% endif %}
                                     </ul>
 
                                     <div class="welcome-msg">Default welcome msg!</div>
@@ -209,7 +215,7 @@
                         <div class="nav-inner">
                             <div id="advancedmenu" style="display: block;">
                                 <div class="menu">
-                                    <div class="parentMenu menu0 home_link"> <a href="#"> <span>Home</span> </a> </div>
+                                    <div class="parentMenu menu0 home_link"> <a href="{{ url('bitcoin_site_homepage') }}"> <span>Home</span> </a> </div>
                                 </div>
                                 <div id="menu88" class="menu" onmouseover="megnorShowMenuPopup(this, 'popup88');" onmouseout="megnorHideMenuPopup(this, event, 'popup88', 'menu88')">
                                     <div class="parentMenu"> <a href="#"> <span>Diamond Jewellery</span> </a> </div>
@@ -349,33 +355,7 @@
                     {% endblock %}
 
                     {% block slider %}
-                    <div class="fullwidthbanner-container">
-                        <div class="fullwidthbanner">
-                            <ul>
-                                <li class="slide1" data-transition="random" data-slotamount="7" data-link="http://www.google.de"><img src="{{ asset('bundles/bitcoinsite/') }}images/bg.jpg" alt="" />
-                                    <div class="slide1_img tp-caption start" data-x="513" data-y="70" data-speed="700" data-start="800" data-easing="easeOutBounce"><img src="{{ asset('bundles/bitcoinsite/') }}images/main-banner1-img.png" alt="" /></div>
-                                    <div class="caption1 tp-caption sft" data-x="775" data-y="113" data-speed="900" data-start="1400" data-easing="easeOutBack"><img src="{{ asset('bundles/bitcoinsite/') }}images/20per-off.png" alt="" /></div>
-                                    <div class="caption2 tp-caption  skewfromright" data-x="85" data-y="96" data-speed="700" data-start="1200" data-easing="easeInExpo">Traditional costume Jewellery</div>
-                                    <div class="caption3 tp-caption  skewfrombottom" data-x="85" data-y="155" data-speed="900" data-start="1500" data-easing="easeOutQuint">Nunc non fermentum nunc Sed ut tempor </br> Cosequat sit amet..</div>
-                                    <div class="caption sfb medium_grey" data-x="85" data-y="215" data-speed="700" data-start="2500"><a href="#">Shop Now </a></div>
-                                </li>
-                                <li class="slide2" data-transition="random" data-slotamount="7" data-link="#"><img src="{{ asset('bundles/bitcoinsite/') }}images/bg.jpg" alt="" />
-                                    <div class="slide2_img tp-caption sfb start" data-x="45" data-y="60" data-speed="700" data-start="800" data-easing="easeOutBack"><img src="{{ asset('bundles/bitcoinsite/') }}images/main-banner2-img.png" alt="" /></div>
-                                    <div class="caption4 tp-caption sft" data-x="260" data-y="186" data-speed="900" data-start="1400" data-easing="easeOutBack"><img src="{{ asset('bundles/bitcoinsite/') }}images/20per-off.png" alt="" /></div>
-                                    <div class="caption5 tp-caption  skewfromleftshort customout" data-x="455" data-y="96" data-speed="500" data-start="1800" data-easing="easeOutBack"><strong>Exquisite Designer Jewellery</strong></div>
-                                    <div class="caption6 tp-caption  skewfrombottom" data-x="455" data-y="150" data-speed="900" data-start="1500" data-easing="easeOutQuint">Add more Glamour to your style with our gorgeous </br> Jewellery Collection</div>
-                                    <div class="caption sfb medium_grey" data-x="455" data-y="213" data-speed="700" data-start="2500"><a href="#">Shop Now </a></div>
-                                </li>
-                                <li class="slide3" data-transition="random" data-slotamount="7" data-link="#"><img src="{{ asset('bundles/bitcoinsite/') }}images/bg.jpg" alt="" />
-                                    <div class="slide3_img tp-caption sfb start" data-x="552" data-y="48" data-speed="700" data-start="800" data-easing="easeOutBack"><img src="{{ asset('bundles/bitcoinsite/') }}images/main-banner3-img.png" alt="" /></div>
-                                    <div class="caption7 tp-caption sft" data-x="737" data-y="196" data-speed="900" data-start="1400" data-easing="easeOutBack"><img src="{{ asset('bundles/bitcoinsite/') }}images/20per-off.png" alt="" /></div>
-                                    <div class="caption8 tp-caption  sft" data-x="87" data-y="95" data-speed="900" data-start="1400" data-easing="easeOutQuad">Stylish Women that is your big deal</div>
-                                    <div class="caption9 tp-caption  lfl tp-resizeme start" data-x="87" data-y="155" data-speed="500" data-start="2200" data-easing="easeInQuart">Nunc non termentum nunc. Sed ut tempor</br>consequat sit amet...</div>
-                                    <div class="caption sfb medium_grey" data-x="87" data-y="215" data-speed="700" data-start="2500"><a href="#">Shop Now </a></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    
                     {% endblock %}
                     
                     {% block content %}

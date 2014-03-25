@@ -20,7 +20,8 @@ class CustomExtension extends \Twig_Extension {
         $result = '';
         foreach ($categories as $category) {
             $result .= '<li class="level' . $level . ' nav-' . $category->getId() . '">';
-            $result .= '<a href="#"><span>' . $category->getCategoryName() . '</span></a>';
+            $result .= '<a href="#" class=""><span>' . $category->getCategoryName() . '</span></a>';
+            $result .= '<i class="clear"></i>';
             $child = $category->getChild();
             if (count($child) > 0) {
                 $result .= '<ul class="level1">';
@@ -28,6 +29,7 @@ class CustomExtension extends \Twig_Extension {
                 $result .= '</ul>';
             }
             //$result .= count($child).'</li>';
+            $result .= '<i class="clear"></i>';
             $result .= '</li>';
         }
         return $result;

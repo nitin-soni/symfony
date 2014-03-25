@@ -61,10 +61,12 @@
                 field: "fkProduct",
                 filter: false,
                 callback: function(data, cell) {
-                    showRoute = "{{ path('product_show', { 'id': "PLACEHOLDER" }) }}";
-                    showRoute = showRoute.replace("PLACEHOLDER", data['fkProduct']['id']);
-                    //return data['fkProduct']['productTitle'];
-                    return '<a class="" href="'+showRoute+'">'+data['fkProduct']['productTitle']+'</a>';
+                    if(data['fkProduct']!=null) {
+                        showRoute = "{{ path('product_show', { 'id': "PLACEHOLDER" }) }}";
+                        showRoute = showRoute.replace("PLACEHOLDER", data['fkProduct']['id']);
+                        //return data['fkProduct']['productTitle'];
+                        return '<a class="" href="'+showRoute+'">'+data['fkProduct']['productTitle']+'</a>';
+                    }
                 }
             },
             {

@@ -1,16 +1,72 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>ProductReview edit</h1>
-
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('product-review') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{% extends 'BitcoinAdminBundle::base.html.twig' %}
+{% block title 'Edit Product Review' %}
+{% block page_heading 'Edit Product Review'%}
+{% block javascript %}
+<script type="text/javascript" src="{{ asset('bundles/bitcoinadmin/') }}libs/ckeditor/ckeditor.js" ></script>
+<script type="text/javascript">
+    CKEDITOR.replace();
+</script>
+{% endblock %}
+{% block contentdata %}
+    {% block form_widget %}
+    {{ form_start(form, {'attr': {'class':'form-horizontal','autocomplete':'off'}}) }}  
+        <div class="control-group">
+            {{ form_label(form.fullname, 'Full Name', {'label_attr': {'class': 'control-label'}}) }}<i class="require">*</i>
+            <div class="controls">
+                {{ form_widget(form.fullname, {'attr': {'class': 'txtField', 'placeholder':'Product Name'}}) }}
+                {{ show_error(form.fullname) }}
+            </div>
+        </div>
+        <div class="control-group">
+            {{ form_label(form.title, 'Review Title', {'label_attr': {'class': 'control-label'}}) }}<i class="require">*</i>
+            <div class="controls">
+                {{ form_widget(form.title, {'attr': {'class': 'txtField', 'placeholder':'Review Title'}}) }}
+                {{ show_error(form.title) }}
+            </div>
+        </div>
+        <div class="control-group">
+                {{ form_label(form.review, 'Review', {'label_attr': {'class': 'control-label'}}) }}
+            <div class="controls">
+                {{ form_widget(form.review, {'attr': {'class': 'ckeditor ', 'placeholder':'Description'}}) }}
+                {{ show_error(form.review) }}
+            </div>
+        </div>
+        <div class="control-group">
+            {{ form_label(form.fkProduct, 'Product', {'label_attr': {'class': 'control-label'}}) }}<i class="require">*</i>
+            <div class="controls">
+                {{ form_widget(form.fkProduct, {'attr': {'class': 'selectBox', 'placeholder':'Email'}}) }}
+                {{ show_error(form.fkProduct) }}
+            </div>
+        </div>
+        <div class="control-group radio_div">
+            {{ form_label(form.rating, 'Rating', {'label_attr': {'class': 'control-label'}}) }}
+            <div class="controls">
+                {% for rate in form.rating %}
+                    <label class="radio inline">
+                        {{ form_widget(rate) }}
+                        {{ form_label(rate) }}
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group radio_div">
+            {{ form_label(form.published, 'Published', {'label_attr': {'class': 'control-label'}}) }}
+            <div class="controls">
+                {% for publish in form.published %}
+                    <label class="radio inline">
+                        {{ form_widget(publish) }}
+                        {{ form_label(publish) }}
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                {% form_theme form _self %}
+                {{ form_widget(form.submit, {'attr':{'class':'dark-button'}, 'label':'Save'}) }}
+                <button type="reset" class="light-button">Cancel</button></p>
+            </div>
+        </div>
+    {{ form_end(form) }}
+    {% endblock form_widget %}
 {% endblock %}

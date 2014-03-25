@@ -1,0 +1,16 @@
+## YAML Template.
+bitcoin_site_register:
+    pattern:  /register
+    defaults: { _controller: BitcoinSiteBundle:User:register}
+
+bitcoin_site_register_submit:
+    pattern:  /register-submit
+    defaults: { _controller: BitcoinSiteBundle:User:registerSubmit}
+    
+bitcoin_site_authenticate:
+    pattern:  /authenticate
+    defaults: { _controller: BitcoinSiteBundle:User:authenticate}
+    
+bitcoin_user_logout:
+    pattern: /logout
+    defaults: { _controller: BitcoinSiteBundle:User:logout}

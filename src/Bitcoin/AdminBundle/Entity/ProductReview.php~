@@ -256,4 +256,27 @@ class ProductReview {
     {
         return $this->published;
     }
+
+    /**
+     * Set fullname
+     *
+     * @param string $fullname
+     * @return ProductReview
+     */
+    public function setFullname($fullname)
+    {
+        $this->fullname = $fullname;
+
+        return $this;
+    }
+
+    /**
+     * Get fullname
+     *
+     * @return string 
+     */
+    public function getFullname()
+    {
+        return $this->fullname;
+    }
 }

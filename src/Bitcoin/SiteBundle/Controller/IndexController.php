@@ -7,10 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Bitcoin\AdminBundle\Entity\ProductReview;
 use Bitcoin\SiteBundle\Form\ReviewType;
 use Bitcoin\SiteBundle\FormFilter\ReviewFilter;
+use Bitcoin\SiteBundle\Controller\FrontController;
 
-class IndexController extends Controller {
+class IndexController extends FrontController {
 
-    private $data = array();
+    //private $data = array();
 
     public function indexAction() {
         $em = $this->getDoctrine()->getEntityManager();

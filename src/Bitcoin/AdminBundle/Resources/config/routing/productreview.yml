@@ -1,6 +1,7 @@
 product-review:
     pattern:  /
-    defaults: { _controller: "BitcoinAdminBundle:ProductReview:index" }
+    defaults: { _controller: "BitcoinAdminBundle:ProductReview:list" }
+    #defaults: { _controller: "BitcoinAdminBundle:ProductReview:index" }
 
 product-review_show:
     pattern:  /{id}/show
@@ -27,7 +28,7 @@ product-review_update:
 product-review_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "BitcoinAdminBundle:ProductReview:delete" }
-    requirements: { _method: post|delete }
+    requirements: { _method: post|delete|get }
 
 product-review_grid:
     pattern:  /grid

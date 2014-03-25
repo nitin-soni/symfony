@@ -41,10 +41,13 @@ class ProductReviewController extends AdminController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $entity->setCreatedDate();
+            $entity->setModifiedDate();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('product-review_show', array('id' => $entity->getId())));
+            $this->session->getFlashBag()->add('notice', 'Review Added Successfully.');
+            return $this->redirect($this->generateUrl('product-review'));
+            //return $this->redirect($this->generateUrl('product-review_show', array('id' => $entity->getId())));
         }
 
         return $this->render('BitcoinAdminBundle:ProductReview:new.html.twig', array(
@@ -79,6 +82,8 @@ class ProductReviewController extends AdminController
     public function newAction()
     {
         $entity = new ProductReview();
+        $entity->setRating(1);
+        $entity->setPublished(false);
         $form   = $this->createCreateForm($entity);
 
         return $this->render('BitcoinAdminBundle:ProductReview:new.html.twig', array(
@@ -121,14 +126,13 @@ class ProductReviewController extends AdminController
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find ProductReview entity.');
         }
-
+        
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('BitcoinAdminBundle:ProductReview:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form'   => $editForm->createView(),
         ));
     }
 
@@ -169,15 +173,15 @@ class ProductReviewController extends AdminController
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $entity->setModifiedDate();
             $em->flush();
-
-            return $this->redirect($this->generateUrl('product-review_edit', array('id' => $id)));
+            $this->session->getFlashBag()->add('notice', 'Review updated Successfully.');
+            return $this->redirect($this->generateUrl('product-review'));
         }
 
         return $this->render('BitcoinAdminBundle:ProductReview:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form'   => $editForm->createView(),
         ));
     }
     /**
@@ -189,7 +193,7 @@ class ProductReviewController extends AdminController
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        //if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('BitcoinAdminBundle:ProductReview')->find($id);
 
@@ -199,8 +203,8 @@ class ProductReviewController extends AdminController
 
             $em->remove($entity);
             $em->flush();
-        }
-
+        //}
+        $this->session->getFlashBag()->add('notice', 'Review removed Successfully.');
         return $this->redirect($this->generateUrl('product-review'));
     }
 

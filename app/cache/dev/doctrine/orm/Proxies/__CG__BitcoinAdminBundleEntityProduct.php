@@ -496,4 +496,26 @@ class Product extends \Bitcoin\AdminBundle\Entity\Product implements \Doctrine\O
         return parent::getReviews();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function addReview(\Bitcoin\AdminBundle\Entity\ProductReview $reviews)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addReview', array($reviews));
+
+        return parent::addReview($reviews);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeReview(\Bitcoin\AdminBundle\Entity\ProductReview $reviews)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeReview', array($reviews));
+
+        return parent::removeReview($reviews);
+    }
+
 }

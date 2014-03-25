@@ -1,0 +1,130 @@
+{% extends 'BitcoinSiteBundle::layout.html.twig' %}
+{% block content %}
+<section class="main-container col1-layout">
+    <div class="main">
+        <article class="col-main">
+            <div class="account-login">
+                <div class="page-title myaccount">
+                    <h1>Login or Create an Account</h1>
+                </div>
+                <input type="hidden" value="tc5NDCt0RlGk8wm0" name="form_key">
+                <div class="col2-set" style="margin-top:10px;">
+                    {% block form_widget %}
+                    {{ form_start(register_form, {'attr': {'class':'form-horizontal','autocomplete':'off','id':'review-form', 'method':'post'}}) }}
+                    {{ form_errors(register_form) }}
+                    <div class="col-1 new-users">
+                        <div class="account-create">
+                            <div class="page-title">
+                                <h1>Create an Account</h1>
+                            </div>
+
+                            <div class="fieldset">
+                                <input type="hidden" name="success_url" value="">
+                                <input type="hidden" name="error_url" value="">
+                                <h2 class="legend">Personal Information</h2>
+                                <ul class="form-list">
+                                    <li class="fields">
+                                        <div class="customer-name">
+                                            <div class="field name-firstname">
+                                                {{ form_label(register_form.firstName, "First Name" | raw, {'label_attr': {'class': 'required'}}) }}<em class="required">*</em>
+                                                <div class="input-box">
+                                                    {{ form_widget(register_form.firstName, {'attr': {'class': 'input-text required-entry', 'placeholder':'First Name', 'required':false}}) }}
+                                                    {{ show_error(register_form.firstName) }}
+                                                </div>
+                                            </div>
+                                            <div class="field name-lastname">
+                                                {{ form_label(register_form.lastName, "Last Name" | raw, {'label_attr': {'class': 'required'}}) }}<em class="required">*</em>
+                                                <div class="input-box">
+                                                    {{ form_widget(register_form.lastName, {'attr': {'class': 'input-text required-entry', 'placeholder':'Last Name', 'required':false}}) }}
+                                                    {{ show_error(register_form.lastName) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        {{ form_label(register_form.emailAddress, "Email Address" | raw, {'label_attr': {'class': 'required'}}) }}<em class="required">*</em>
+                                        <div class="input-box">
+                                            {{ form_widget(register_form.emailAddress, {'attr': {'class': 'input-text required-entry', 'placeholder':'Email Address', 'required':false}}) }}
+                                            {{ show_error(register_form.emailAddress) }}
+                                        </div>
+                                    </li>
+                                    {#
+                                    <li class="control">
+                                        <div class="input-box">
+                                            <div class="tm-checkbox">
+                                                {{ form_widget(register_form.subscribed, {'attr': {'class': 'checkbox tm-hide', 'required':false}}) }}
+                                            </div>
+                                        </div>
+                                        <label for="is_subscribed">Sign Up for Newsletter</label>
+                                    </li>
+                                    #}
+                                </ul>
+                            </div>
+
+                            <div class="fieldset">
+                                <h2 class="legend">Login Information</h2>
+                                <ul class="form-list">
+                                    <li class="fields">
+                                        <div class="field">
+                                            
+                                            {{ form_label(register_form.password.first, "Password" | raw, {'label_attr': {'class': 'required'}}) }}<em class="required">*</em>
+                                            <div class="input-box">
+                                                {{ form_widget(register_form.password.first, {'attr': {'class': 'input-text required-entry', 'placeholder':'Password', 'required':false}}) }}
+                                                {{ show_error(register_form.password) }}
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="field">
+                                            {{ form_label(register_form.password.second, "Confirn Password" | raw, {'label_attr': {'class': 'required'}}) }}<em class="required">*</em>
+                                            <div class="input-box">
+                                                {{ form_widget(register_form.password.second, {'attr': {'class': 'input-text required-entry', 'placeholder':'Confirm Password', 'required':false}}) }}
+                                                {{ show_error(register_form.password.second) }}
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <div class="">
+                                <p class="required">* Required Fields</p>
+                                <button type="submit" title="Submit" class="button"><span><span>Submit</span></span></button>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(register_form) }}
+                    <div class="col-2 registered-users">
+                        {{ form_start(login_form, {'attr': {'class':'form-horizontal','autocomplete':'on','id':'review-form', 'method':'post'}}) }}
+                        {{ form_errors(login_form) }}
+                        <div class="content">
+                            <h2>Registered Customers</h2>
+                            <p>If you have an account with us, please log in.</p>
+                            <ul class="form-list">
+                                <li>
+                                    {{ form_label(login_form.emailAddress, "Email Address" | raw, {'label_attr': {'class': 'required'}}) }}<em class="required">*</em>
+                                    <div class="input-box">
+                                        {{ form_widget(login_form.emailAddress, {'attr': {'class': 'input-text required-entry', 'placeholder':'Email Address', 'required':false}}) }}
+                                        {{ show_error(login_form.emailAddress) }}
+                                    </div>
+                                </li>
+                                <li>
+                                    {{ form_label(login_form.password, "Password" | raw, {'label_attr': {'class': 'required'}}) }}<em class="required">*</em>
+                                    <div class="input-box">
+                                        {{ form_widget(login_form.password, {'attr': {'class': 'input-text required-entry', 'placeholder':'password', 'required':false}}) }}
+                                        {{ show_error(login_form.password) }}
+                                    </div>
+                                </li>
+                            </ul>
+                            <p class="required">* Required Fields</p>
+                        </div>
+                        <div class="buttons-set"> <a href="forgotpassword.html" class="f-left">Forgot Your Password?</a>
+                            <button type="submit" class="button" title="Login" name="send" id="send2"><span><span>Login</span></span></button>
+                        </div>
+                        {{ form_end(login_form) }}
+                        {% endblock form_widget %}
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock %}

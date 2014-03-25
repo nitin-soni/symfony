@@ -170,12 +170,11 @@ class User
     /**
      * Set createdDate
      *
-     * @param \DateTime $createdDate
      * @return User
      */
-    public function setCreatedDate($createdDate)
+    public function setCreatedDate()
     {
-        $this->createdDate = $createdDate;
+        $this->createdDate = new \DateTime();
 
         return $this;
     }
@@ -193,12 +192,11 @@ class User
     /**
      * Set modifiedDate
      *
-     * @param \DateTime $modifiedDate
      * @return User
      */
-    public function setModifiedDate($modifiedDate)
+    public function setModifiedDate()
     {
-        $this->modifiedDate = $modifiedDate;
+        $this->modifiedDate = new \DateTime();
 
         return $this;
     }

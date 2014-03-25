@@ -31,6 +31,7 @@ class ProductReview {
      * @var string
      *
      * @ORM\Column(name="fullname", type="string", length=255, nullable=true)
+     * @Assert\NotBlank
      */
     private $fullname;
     
@@ -38,6 +39,7 @@ class ProductReview {
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @Assert\NotBlank
      */
     private $title;
     
@@ -45,6 +47,7 @@ class ProductReview {
      * @var string
      *
      * @ORM\Column(name="review", type="text", nullable=true)
+     * @Assert\NotBlank
      */
     private $review;
     
@@ -52,6 +55,7 @@ class ProductReview {
      * @var string
      *
      * @ORM\Column(name="rating", type="integer", nullable=false)
+     * @Assert\NotBlank
      */
     private $rating;
     
@@ -59,6 +63,7 @@ class ProductReview {
      * @var boolean
      *
      * @ORM\Column(name="published", type="boolean", precision=0, scale=0, nullable=false, unique=false)
+     * @Assert\NotBlank
      */
     private $published;
     
@@ -69,6 +74,7 @@ class ProductReview {
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fk_product", referencedColumnName="id", onDelete="CASCADE")
      * })
+     * @Assert\NotBlank
      */
     private $fkProduct;
     

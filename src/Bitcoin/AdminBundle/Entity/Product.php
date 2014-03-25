@@ -446,4 +446,27 @@ class Product
     {
         return $this->reviews;
     }
+
+    /**
+     * Add reviews
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductReview $reviews
+     * @return Product
+     */
+    public function addReview(\Bitcoin\AdminBundle\Entity\ProductReview $reviews)
+    {
+        $this->reviews[] = $reviews;
+
+        return $this;
+    }
+
+    /**
+     * Remove reviews
+     *
+     * @param \Bitcoin\AdminBundle\Entity\ProductReview $reviews
+     */
+    public function removeReview(\Bitcoin\AdminBundle\Entity\ProductReview $reviews)
+    {
+        $this->reviews->removeElement($reviews);
+    }
 }

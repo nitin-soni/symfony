@@ -1,0 +1,11 @@
+bitcoin_cart:
+    pattern:  /
+    defaults: { _controller: BitcoinSiteBundle:Index:index}
+    
+bitcoin_cart_add_ajax:
+    pattern:  /add-to-cart
+    defaults: { _controller: BitcoinSiteBundle:Cart:addtoCart}
+
+bitcoin_cart_add_ajax:
+    pattern:  /add-to-cart
+    defaults: { _controller: BitcoinSiteBundle:Cart:addtoCart}

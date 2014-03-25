@@ -5798,3 +5798,8 @@ transform:rotate(-360deg);
     top: -26px;
     transform: rotate(45deg);
 }
+
+
+em.required {
+    color: #FF0000;
+}

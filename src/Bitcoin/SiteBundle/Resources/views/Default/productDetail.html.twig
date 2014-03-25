@@ -1,31 +1,34 @@
 {% extends 'BitcoinSiteBundle::layout.html.twig' %}
 {% block slider %}{% endblock %}
-{% block style %}
-<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bitcoinsite/') }}css/cloud-lightbox-zoom.css" media="all" />
-{% endblock %}
 {% block script %}
 <script type="text/javascript" src="{{ asset('bundles/bitcoinsite/') }}js/product.js"></script>
 <script type="text/javascript" src="{{ asset('bundles/bitcoinsite/') }}js/jquery.colorbox-min.js"></script>
 <script type="text/javascript" src="{{ asset('bundles/bitcoinsite/') }}js/cloud-zoom.js"></script>
-
+<script type="text/javascript">
+    jQuery.noConflict();
+    function productAddToCartForm() 
+    {
+        var qty = jQuery("#qty").val();
+        var productId = {{ product.id }};
+        jQuery.ajax({
+            type: 'POST',
+            url: '{{ url('bitcoin_cart_add_ajax') }}',
+            data: {productId:productId, qty:qty},
+            success: function(res) {
+                alert(res);
+            }
+        });
+    }
+</script>
 {% endblock %}
 {% block content %}
 <section class="main-container col2-left-layout">
     <div class="main">
         <article class="col-main">
-            <script type="text/javascript">
-                var optionsPrice = new Product.OptionsPrice({"productId": "57", "priceFormat": {"pattern": "$%s", "precision": 2, "requiredPrecision": 2, "decimalSymbol": ".", "groupSymbol": ",", "groupLength": 3, "integerRequired": 1}, "includeTax": "false", "showIncludeTax": false, "showBothPrices": false, "productPrice": 720, "productOldPrice": 730, "priceInclTax": 720, "priceExclTax": 720, "skipCalculate": 1, "defaultTax": 0, "currentTax": 0, "idSuffix": "_clone", "oldPlusDisposition": 0, "plusDisposition": 0, "plusDispositionTax": 0, "oldMinusDisposition": 0, "minusDisposition": 0, "tierPrices": [], "tierPricesInclTax": []});
-            </script>
             <div id="messages_product_view"></div>
             <div class="product-view">
                 <div class="product-essential">
-                    <form action="#" method="post" id="product_addtocart_form" enctype="multipart/form-data">
-                        <input name="form_key" type="hidden" value="eS3GswPbJKq3c3th" />
-                        <div class="no-display">
-                            <input type="hidden" name="product" value="57" />
-                            <input type="hidden" name="related_product" id="related-products-field" value="" />
-                        </div> 
-
+                    
                         <div class="product-img-box">
                             {% if product.images is defined and product.images is not empty  %}
                                 {% set image = product.images.0.path %}
@@ -122,71 +125,31 @@
                             <p class="no-rating"><a rel="nofollow" onclick="review_tab_show()" href="#product_tabs_review_tabbed">Be the first to review this product</a></p>
 
                             <div class="sku"><span>SKU: </span>{{ ( product.sku is not empty) ? product.sku : 'N/A'  }}</div>
-
-                            <p class="availability in-stock">Availability: <span>In stock</span></p>
-
-                            <div class="price-box">
-                                <span class="price special-price" id="product-price-57">$ {{ product.price }}</span>
-                            </div>
-
-
-
-
-
+                            
+                                <p class="availability in-stock">Availability: <span>In stock</span></p>
+                                <div class="price-box">
+                                    <span class="price special-price" id="product-price-57"><img src="{{ asset('bundles/bitcoinsite/') }}images/bitcoin.png" width="16" height="16" alt="B" /> {{ product.price }}</span>
+                                </div>
+                            
                             <div class="clearer"></div>
                             <div class="product-options-bottom">
-
-
-
-                                <div class="price-box">
-
-
-                                    <span class="price old-price" id="old-price-57_clone">
-                                        $730.00                </span>
-
-
-
-                                    <span class="price special-price" id="product-price-57_clone">
-                                        $720.00                </span>
-
-
-
-                                </div>
-
-                                <div class="add-to-cart">
-                                    <label for="qty">Qty:</label>
-                                    <input type="text" name="qty" id="qty" maxlength="12" value="1" title="Qty" class="input-text qty" />
-                                    <button type="button" title="Add to Cart" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span>Add to Cart</span></span></button>
-                                </div>
-
-
+                                <form action="#" method="post" onsubmit="productAddToCartForm(); return false;">
+                                    <div class="add-to-cart">
+                                        <label for="qty">Qty:</label>
+                                        <input type="text" name="qty" id="qty" maxlength="12" value="1" title="Qty" class="input-text qty" autocomplete="off"/>
+                                        <button type="button" title="Add to Cart" class="button btn-cart" onclick="productAddToCartForm(); return false;"><span><span>Add to Cart</span></span></button>
+                                    </div>
+                                </form>
                                 <ul class="add-to-links">
-                                    <li><a href="#" onclick="productAddToCartForm.submitLight(this, this.href);
-                                            return false;" class="link-wishlist">Add to Wishlist</a></li>
-                                    <li><span class="separator">|</span> <a href="#" class="link-compare">Add to Compare</a></li>
+                                    <li><a href="#" onclick="" class="link-wishlist">Add to Wishlist</a></li>
                                 </ul>
                             </div>
-
-
-                            <div class="email-addto-box"> 
-                                <p class="email-friend"><a href="#">Email to a Friend</a></p>
-
-
-                                <ul class="add-to-links">
-                                    <li><a href="#" onclick="productAddToCartForm.submitLight(this, this.href);
-                                            return false;" class="link-wishlist">Add to Wishlist</a></li>
-                                    <li><span class="separator">|</span> <a href="#" class="link-compare">Add to Compare</a></li>
-                                </ul>
-                            </div>
-
                         </div> 
                         <div class="info3col-data">
                             <div class="custom_block">
                             </div>
                         </div>
-
-
-                    </form>
+                    
                 </div>
 
                 <div class="product-collateral">
@@ -334,7 +297,18 @@
                             <ol>
                                 <div class="box-collateral box-tags">
                                     {% for review in product.reviews %}
-                                        {{ review.title }}
+                                        <div class="review-box">
+                                            <div class="left">
+                                                <b>Title :</b> {{ review.title }}
+                                            </div>
+                                            <div class="right">
+                                                <b>Added By :</b> {{ review.fullname }}
+                                            </div>
+                                            <div class="clear"></div>
+                                            <div>
+                                                {{ review.review | raw }}
+                                            </div>
+                                        </div>
                                     {% endfor %}
                                 </div>
                             </ol>
@@ -383,4 +357,15 @@
         {% include 'BitcoinSiteBundle:Includes:sidebar.html.twig' %}
     </div>
 </section>
+{% endblock %}
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bitcoinsite/') }}css/cloud-lightbox-zoom.css" media="all" />
+<style>
+    .review-box{
+        border-bottom: 1px dashed #EBEBEB;
+        margin-bottom: 10px;
+    }
+    .review-box .left{float: left;}
+    .review-box .right{float: right;}
+</style>
 {% endblock %}

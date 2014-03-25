@@ -157,6 +157,49 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
         }
 
+        if (0 === strpos($pathinfo, '/account')) {
+            if (0 === strpos($pathinfo, '/account/register')) {
+                // bitcoin_site_register
+                if ($pathinfo === '/account/register') {
+                    return array (  '_controller' => 'Bitcoin\\SiteBundle\\Controller\\UserController::registerAction',  '_route' => 'bitcoin_site_register',);
+                }
+
+                // bitcoin_site_register_submit
+                if ($pathinfo === '/account/register-submit') {
+                    return array (  '_controller' => 'Bitcoin\\SiteBundle\\Controller\\UserController::registerSubmitAction',  '_route' => 'bitcoin_site_register_submit',);
+                }
+
+            }
+
+            // bitcoin_site_authenticate
+            if ($pathinfo === '/account/authenticate') {
+                return array (  '_controller' => 'Bitcoin\\SiteBundle\\Controller\\UserController::authenticateAction',  '_route' => 'bitcoin_site_authenticate',);
+            }
+
+            // bitcoin_user_logout
+            if ($pathinfo === '/account/logout') {
+                return array (  '_controller' => 'Bitcoin\\SiteBundle\\Controller\\UserController::logoutAction',  '_route' => 'bitcoin_user_logout',);
+            }
+
+        }
+
+        if (0 === strpos($pathinfo, '/cart')) {
+            // bitcoin_cart
+            if (rtrim($pathinfo, '/') === '/cart') {
+                if (substr($pathinfo, -1) !== '/') {
+                    return $this->redirect($pathinfo.'/', 'bitcoin_cart');
+                }
+
+                return array (  '_controller' => 'Bitcoin\\SiteBundle\\Controller\\IndexController::indexAction',  '_route' => 'bitcoin_cart',);
+            }
+
+            // bitcoin_cart_add_ajax
+            if ($pathinfo === '/cart/add-to-cart') {
+                return array (  '_controller' => 'Bitcoin\\SiteBundle\\Controller\\CartController::addtoCartAction',  '_route' => 'bitcoin_cart_add_ajax',);
+            }
+
+        }
+
         if (0 === strpos($pathinfo, '/admin')) {
             // bitcoin_admin_homepage
             if (rtrim($pathinfo, '/') === '/admin') {
@@ -354,7 +397,7 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                                 return $this->redirect($pathinfo.'/', 'product-review');
                             }
 
-                            return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductReviewController::indexAction',  '_route' => 'product-review',);
+                            return array (  '_controller' => 'Bitcoin\\AdminBundle\\Controller\\ProductReviewController::listAction',  '_route' => 'product-review',);
                         }
 
                         // product-review_show
@@ -396,8 +439,8 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
 
                         // product-review_delete
                         if (preg_match('#^/admin/product\\-review/(?P<id>[^/]++)/delete$#s', $pathinfo, $matches)) {
-                            if (!in_array($this->context->getMethod(), array('POST', 'DELETE'))) {
-                                $allow = array_merge($allow, array('POST', 'DELETE'));
+                            if (!in_array($this->context->getMethod(), array('POST', 'DELETE', 'GET', 'HEAD'))) {
+                                $allow = array_merge($allow, array('POST', 'DELETE', 'GET', 'HEAD'));
                                 goto not_productreview_delete;
                             }
 

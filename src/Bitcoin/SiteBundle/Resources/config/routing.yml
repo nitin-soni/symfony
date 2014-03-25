@@ -10,6 +10,10 @@ bitcoin_product_review:
     pattern:  /prduct-review/{id}
     defaults: { _controller: BitcoinSiteBundle:Secure:submitReview}
 
-#BitcoinAdminBundle_product:
-#    resource: "@BitcoinAdminBundle/Resources/config/routing/product.yml"
-#    prefix:   /product
+BitcoinSiteBundle_user:
+    resource: "@BitcoinSiteBundle/Resources/config/routing/user.yml"
+    prefix:   /account
+    
+BitcoinSiteBundle_cart:
+    resource: "@BitcoinSiteBundle/Resources/config/routing/cart.yml"
+    prefix:   /cart
