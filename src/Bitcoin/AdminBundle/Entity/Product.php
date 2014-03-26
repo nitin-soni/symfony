@@ -98,6 +98,24 @@ class Product
     private $sku;
     
     /**
+     * @var float
+     *
+     * @ORM\Column(name="weight", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank
+     * Assert\Type(type="float", message="Weight should have decimal points.") 
+     */
+    private $weight;
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="carat", type="float", precision=10, scale=0, nullable=false)
+     * @Assert\NotBlank
+     * Assert\Type(type="float", message="Carat should have decimal points.") 
+     */
+    private $carat;
+    
+    /**
      * @var \Doctrine\Common\Collections\Collection
      * 
      * 
@@ -114,6 +132,7 @@ class Product
      * 
      */
     private $reviews;
+    
     
     /**
      * Constructor

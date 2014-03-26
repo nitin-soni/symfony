@@ -1,7 +1,17 @@
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>ProductReview</h1>
+{% extends 'BitcoinAdminBundle::base.html.twig' %}
+{% block title 'Manage Product Category' %}
+{% block leftmenu %}{% endblock %}
+{% block page_heading %}Product Review{% endblock %}
+{% block head_link %}
+<div class=" pull-right span1">
+    <a href="{{ path('product-review') }}" class="sbmt_btn">Back</a> 
+</div>
+<div class=" pull-right span1">
+    <a href="{{ path('product-review_edit', { 'id': entity.id }) }}" class="sbmt_btn">Edit</a>
+</div>{#{ app.request.attributes.get('_route') }#}
+    {#{ form(delete_form) }#}
+{% endblock %}
+{% block contentdata %}
 
     <table class="record_properties">
         <tbody>
@@ -19,7 +29,7 @@
             </tr>
             <tr>
                 <th>Review</th>
-                <td>{{ entity.review }}</td>
+                <td>{{ entity.review | raw }}</td>
             </tr>
             <tr>
                 <th>Rating</th>
@@ -39,18 +49,4 @@
             </tr>
         </tbody>
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('product-review') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('product-review_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 {% endblock %}
